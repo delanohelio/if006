@@ -1,5 +1,9 @@
 # 📦 Sistema de Processamento de Pedidos E-commerce
 
+Cada grupo deve realizar a tarefa de auditoria de código legado, comparando as duas versões do motor de vendas (Projeto A e Projeto B). O objetivo é identificar problemas estruturais, de design e arquitetura que impactam a qualidade.
+
+Os detalhes da tarefa está em: [Auditoria de Código Legado: O Desafio do E-commerce](task.md)
+
 ## 📋 Descrição
 
 Sistema que processa pedidos de e-commerce com as seguintes funcionalidades:
