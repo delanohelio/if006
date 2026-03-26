@@ -7,6 +7,8 @@ Esta pasta contem a versao web da atividade para uso no GitHub Pages.
 - define o grupo automaticamente pelo ultimo digito do CPF
 - exibe as questoes em fluxo sequencial (sem botao de voltar)
 - mede tempo apenas da resposta de saida
+- coleta confianca (1 a 5) junto com a resposta de saida
+- oculta o codigo na Pergunta 2 (variavel)
 - ao final, mostra todos os valores para copiar e preencher no formulario
 
 ## Execucao local

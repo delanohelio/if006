@@ -27,7 +27,9 @@
       </div>
       <p id="progress" class="muted"></p>
 
-      <pre><code id="code-block"></code></pre>
+      <div id="code-panel">
+        <pre><code id="code-block"></code></pre>
+      </div>
 
       <div id="phase-output">
         <h3>Pergunta 1 - Saida</h3>
@@ -35,6 +37,17 @@
         <p class="timer">Tempo atual: <strong id="live-timer">0.0s</strong></p>
         <label for="output-answer">Sua resposta</label>
         <input id="output-answer" type="text" placeholder="Digite a saida exatamente como voce acredita">
+
+        <label for="output-confidence">Confianca na resposta (1 a 5)</label>
+        <select id="output-confidence">
+          <option value="">Selecione</option>
+          <option value="1">1 - Chutei</option>
+          <option value="2">2 - Baixa confianca</option>
+          <option value="3">3 - Media confianca</option>
+          <option value="4">4 - Boa confianca</option>
+          <option value="5">5 - Certeza</option>
+        </select>
+
         <button id="confirm-output-btn" type="button">Confirmar resposta de saida</button>
       </div>
 
@@ -59,6 +72,7 @@
             <th>Pagina</th>
             <th>Resposta saida</th>
             <th>Tempo saida (s)</th>
+            <th>Confianca (1-5)</th>
             <th>Variavel existe?</th>
           </tr>
         </thead>

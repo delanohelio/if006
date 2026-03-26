@@ -221,11 +221,13 @@ const el = {
   questionTitle: document.getElementById("question-title"),
   groupBadge: document.getElementById("group-badge"),
   progress: document.getElementById("progress"),
+  codePanel: document.getElementById("code-panel"),
   codeBlock: document.getElementById("code-block"),
   phaseOutput: document.getElementById("phase-output"),
   phaseVariable: document.getElementById("phase-variable"),
   liveTimer: document.getElementById("live-timer"),
   outputAnswer: document.getElementById("output-answer"),
+  outputConfidence: document.getElementById("output-confidence"),
   confirmOutputBtn: document.getElementById("confirm-output-btn"),
   variableQuestion: document.getElementById("variable-question"),
   varYesBtn: document.getElementById("var-yes-btn"),
@@ -289,9 +291,11 @@ function renderQuestion() {
   el.groupBadge.textContent = `Grupo ${state.group}`;
   el.codeBlock.textContent = question.code;
   el.outputAnswer.value = "";
+  el.outputConfidence.value = "";
   el.variableQuestion.textContent = question.variableQuestion;
   el.quizError.textContent = "";
 
+  el.codePanel.classList.remove("hidden");
   el.phaseOutput.classList.remove("hidden");
   el.phaseVariable.classList.add("hidden");
   el.liveTimer.textContent = "0.0s";
@@ -332,8 +336,14 @@ function startQuiz() {
 
 function confirmOutputAnswer() {
   const answer = el.outputAnswer.value.trim();
+  const confidenceRaw = el.outputConfidence.value;
   if (!answer) {
     el.quizError.textContent = "Digite sua resposta para a saida antes de continuar.";
+    return;
+  }
+
+  if (!confidenceRaw) {
+    el.quizError.textContent = "Informe seu nivel de confianca (1 a 5) antes de continuar.";
     return;
   }
 
@@ -344,11 +354,13 @@ function confirmOutputAnswer() {
     pageId: question.id,
     outputAnswer: answer,
     outputTimeSec: Number((elapsedMs / 1000).toFixed(2)),
+    outputConfidence: Number(confidenceRaw),
     variableAnswer: null
   });
 
   stopOutputTimer();
   el.quizError.textContent = "";
+  el.codePanel.classList.add("hidden");
   el.phaseOutput.classList.add("hidden");
   el.phaseVariable.classList.remove("hidden");
 }
@@ -388,6 +400,7 @@ function buildResultText() {
       `q${idx + 1}_id: ${row.pageId}`,
       `q${idx + 1}_resposta_saida: ${row.outputAnswer}`,
       `q${idx + 1}_tempo_saida_segundos: ${row.outputTimeSec}`,
+      `q${idx + 1}_confianca_saida: ${row.outputConfidence}`,
       `q${idx + 1}_variavel_existe: ${row.variableAnswer}`
     );
   });
@@ -409,6 +422,7 @@ function showResults() {
       <td>${idx + 1} (${row.pageId})</td>
       <td>${escapeHtml(row.outputAnswer)}</td>
       <td>${row.outputTimeSec.toFixed(2)}</td>
+      <td>${row.outputConfidence}</td>
       <td>${row.variableAnswer}</td>
     `;
     el.resultTableBody.appendChild(tr);
