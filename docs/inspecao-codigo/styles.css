@@ -1,0 +1,148 @@
+:root {
+  --bg: #f6f3ef;
+  --card: #fffaf3;
+  --ink: #1f1a17;
+  --accent: #0f766e;
+  --accent-2: #b45309;
+  --border: #d7cfc2;
+  --error: #b91c1c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 10% 0%, #f3e8d8, var(--bg) 35%);
+  color: var(--ink);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+h1 {
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  margin-top: 0;
+  color: #534741;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gap {
+  gap: 10px;
+}
+
+.badge {
+  background: #134e4a;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+}
+
+.muted {
+  color: #5b4f48;
+}
+
+.error {
+  color: var(--error);
+  min-height: 1.2rem;
+}
+
+label {
+  display: block;
+  margin: 8px 0 6px;
+  font-weight: 600;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #c3b8aa;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+}
+
+button {
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(0.95);
+}
+
+#var-no-btn {
+  background: var(--accent-2);
+}
+
+pre {
+  overflow-x: auto;
+  background: #1d1f21;
+  color: #f6f7f8;
+  border-radius: 10px;
+  padding: 14px;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.9rem;
+}
+
+.timer {
+  margin: 8px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+}
+
+th,
+td {
+  border: 1px solid #cabead;
+  padding: 8px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 680px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

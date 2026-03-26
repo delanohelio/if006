@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IF006 - Inspecao de Codigo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Inspecao de Codigo</h1>
+    <p class="subtitle">Responda sem executar o codigo. O cronometro mede apenas o tempo da pergunta de saida.</p>
+
+    <section id="start-card" class="card">
+      <h2>Inicio</h2>
+      <label for="cpf-last-digit">Ultimo digito do CPF (0 a 9)</label>
+      <input id="cpf-last-digit" type="number" min="0" max="9" placeholder="Ex.: 8">
+      <p id="group-preview" class="muted">Grupo sera definido automaticamente: par = A, impar = B.</p>
+      <button id="start-btn" type="button">Iniciar atividade</button>
+      <p id="start-error" class="error" aria-live="polite"></p>
+    </section>
+
+    <section id="quiz-card" class="card hidden">
+      <div class="row">
+        <h2 id="question-title">Pagina</h2>
+        <span id="group-badge" class="badge">Grupo</span>
+      </div>
+      <p id="progress" class="muted"></p>
+
+      <pre><code id="code-block"></code></pre>
+
+      <div id="phase-output">
+        <h3>Pergunta 1 - Saida</h3>
+        <p>Qual e a saida impressa?</p>
+        <p class="timer">Tempo atual: <strong id="live-timer">0.0s</strong></p>
+        <label for="output-answer">Sua resposta</label>
+        <input id="output-answer" type="text" placeholder="Digite a saida exatamente como voce acredita">
+        <button id="confirm-output-btn" type="button">Confirmar resposta de saida</button>
+      </div>
+
+      <div id="phase-variable" class="hidden">
+        <h3>Pergunta 2 - Variavel</h3>
+        <p id="variable-question"></p>
+        <div class="row gap">
+          <button id="var-yes-btn" type="button">SIM</button>
+          <button id="var-no-btn" type="button">NAO</button>
+        </div>
+      </div>
+
+      <p id="quiz-error" class="error" aria-live="polite"></p>
+    </section>
+
+    <section id="result-card" class="card hidden">
+      <h2>Resumo final</h2>
+      <p id="result-headline"></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Pagina</th>
+            <th>Resposta saida</th>
+            <th>Tempo saida (s)</th>
+            <th>Variavel existe?</th>
+          </tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
+
+      <h3>Texto para formulario</h3>
+      <textarea id="result-text" rows="10" readonly></textarea>
+      <div class="row gap">
+        <button id="copy-result-btn" type="button">Copiar resumo</button>
+        <button id="restart-btn" type="button">Reiniciar</button>
+      </div>
+      <p id="copy-feedback" class="muted" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
