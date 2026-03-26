@@ -9,6 +9,7 @@ Esta pasta contem a versao web da atividade para uso no GitHub Pages.
 - mede tempo apenas da resposta de saida
 - coleta confianca (1 a 5) junto com a resposta de saida
 - oculta o codigo na Pergunta 2 (variavel)
+- na Pergunta 2, a verificacao de variavel considera o codigo inteiro
 - ao final, mostra todos os valores para copiar e preencher no formulario
 
 ## Execucao local
@@ -28,3 +29,7 @@ A URL publica ficara em formato:
 `https://SEU-USUARIO.github.io/NOME-DO-REPO/inspecao-codigo/`
 
 Observacao: O caminho final usa a pasta `docs/inspecao-codigo`.
+
+URL desta disciplina:
+
+`https://delanohelio.github.io/if006/inspecao-codigo/`

@@ -17,12 +17,12 @@ const DATASETS = {
         System.out.println(z);
     }
 }`,
-      variableQuestion: "A variavel d existe no ponto do System.out.println(z)?"
+      variableQuestion: "A variavel e existe em algum ponto deste codigo?"
     },
     {
       id: "A02",
       title: "Pagina 02",
-      code: `public class P02Easy {
+      code: `public class P02 {
     public static void main(String[] args) {
         int currentTotal = 10;
 
@@ -38,7 +38,7 @@ const DATASETS = {
         System.out.println(currentTotal);
     }
 }`,
-      variableQuestion: "A variavel partialSum existe no ponto do System.out.println(currentTotal)?"
+      variableQuestion: "A variavel partialSums existe em algum ponto deste codigo?"
     },
     {
       id: "A03",
@@ -53,12 +53,12 @@ const DATASETS = {
         System.out.println(p + "-" + q + "-" + r);
     }
 }`,
-      variableQuestion: "A variavel r existe no ponto do System.out.println(...)?"
+      variableQuestion: "A variavel r existe em algum ponto deste codigo?"
     },
     {
       id: "A04",
       title: "Pagina 04",
-      code: `public class P04Easy {
+      code: `public class P04 {
     public static void main(String[] args) {
         int currentNumber = 0;
         int oddNumberSum = 0;
@@ -81,7 +81,7 @@ const DATASETS = {
         System.out.println(currentNumber + ":" + oddNumberSum);
     }
 }`,
-      variableQuestion: "A variavel currentNumber existe no ponto do System.out.println(...)?"
+      variableQuestion: "A variavel oddNumberSum existe em algum ponto deste codigo?"
     },
     {
       id: "A05",
@@ -97,14 +97,14 @@ const DATASETS = {
         System.out.println(v[0] + "," + v[1] + "," + v[2]);
     }
 }`,
-      variableQuestion: "A variavel t existe no ponto do System.out.println(...)?"
+      variableQuestion: "A variavel values existe em algum ponto deste codigo?"
     }
   ],
   B: [
     {
       id: "B01",
       title: "Pagina 01",
-      code: `public class P01Easy {
+      code: `public class P01 {
     public static void main(String[] args) {
         int leftValue = 2;
         int rightValue = 3;
@@ -118,7 +118,7 @@ const DATASETS = {
         System.out.println(sum);
     }
 }`,
-      variableQuestion: "A variavel doubledSum existe no ponto do System.out.println(sum)?"
+      variableQuestion: "A variavel doubledSum existe em algum ponto deste codigo?"
     },
     {
       id: "B02",
@@ -138,12 +138,12 @@ const DATASETS = {
         System.out.println(x);
     }
 }`,
-      variableQuestion: "A variavel y existe no ponto do System.out.println(x)?"
+      variableQuestion: "A variavel x2 existe em algum ponto deste codigo?"
     },
     {
       id: "B03",
       title: "Pagina 03",
-      code: `public class P03Easy {
+      code: `public class P03 {
     public static void main(String[] args) {
         int processedItems = 1;
         int threshold = 2;
@@ -153,7 +153,7 @@ const DATASETS = {
         System.out.println(processedItems + "-" + threshold + "-" + canContinue);
     }
 }`,
-      variableQuestion: "A variavel canContinue existe no ponto do System.out.println(...)?"
+      variableQuestion: "A variavel continueFlag existe em algum ponto deste codigo?"
     },
     {
       id: "B04",
@@ -179,12 +179,12 @@ const DATASETS = {
         System.out.println(n + ":" + s);
     }
 }`,
-      variableQuestion: "A variavel n existe no ponto do System.out.println(...)?"
+      variableQuestion: "A variavel sum existe em algum ponto deste codigo?"
     },
     {
       id: "B05",
       title: "Pagina 05",
-      code: `public class P05Easy {
+      code: `public class P05 {
     public static void main(String[] args) {
         int[] values = {1, 2, 3};
         int firstValueBackup = values[0];
@@ -195,7 +195,7 @@ const DATASETS = {
         System.out.println(values[0] + "," + values[1] + "," + values[2]);
     }
 }`,
-      variableQuestion: "A variavel firstValueBackup existe no ponto do System.out.println(...)?"
+      variableQuestion: "A variavel firstValueBackup existe em algum ponto deste codigo?"
     }
   ]
 };
