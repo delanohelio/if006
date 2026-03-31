@@ -1,438 +1,82 @@
-const DATASETS = {
-  A: [
-    {
-      id: "A01",
-      title: "Pagina 01",
-      code: `public class P01 {
-    public static void main(String[] args) {
-        int x = 2;
-        int y = 3;
-        int z = x + y;
+// ============================================================
+// Catálogo de formulários
+// Para adicionar um novo form:
+//   1. Crie o arquivo JSON em forms/ seguindo a estrutura existente.
+//   2. Adicione uma entrada neste array com id, title, description e file.
+// ============================================================
+const FORM_CATALOG = [
+  {
+    id: "inspecao-codigo-s1",
+    title: "Inspeção de Código — Semana 1",
+    description: "Rastreio de código Java. Responda sem executar. Teste A/B habilitado.",
+    file: "forms/inspecao-codigo-s1.json"
+  },
+  {
+    id: "inspecao-codigo-s2",
+    title: "Inspeção de Código — Semana 2",
+    description: "Compare alternativas de código e indique qual parece mais adequada para produção.",
+    file: "forms/inspecao-codigo-s2.json"
+  }
+  // Exemplo de como adicionar um segundo form:
+  // {
+  //   id: "outro-form",
+  //   title: "Novo Formulário",
+  //   description: "Descrição do formulário.",
+  //   file: "forms/outro-form.json"
+  // }
+];
 
-        if (z > 4) {
-            int d = z * 2;
-            z = d - 1;
-        }
-
-        System.out.println(z);
-    }
-}`,
-      variableQuestion: "A variavel e existe em algum ponto deste codigo?"
-    },
-    {
-      id: "A02",
-      title: "Pagina 02",
-      code: `public class P02 {
-    public static void main(String[] args) {
-        int currentTotal = 10;
-
-        for (int iteration = 0; iteration < 2; iteration++) {
-            int partialSum = currentTotal + iteration;
-
-            if (iteration == 1) {
-                int doubledPartial = partialSum * 2;
-                currentTotal = doubledPartial - 5;
-            }
-        }
-
-        System.out.println(currentTotal);
-    }
-}`,
-      variableQuestion: "A variavel partialSums existe em algum ponto deste codigo?"
-    },
-    {
-      id: "A03",
-      title: "Pagina 03",
-      code: `public class P03 {
-    public static void main(String[] args) {
-        int p = 1;
-        int q = 2;
-
-        boolean r = (p++ > 1) && (++q > 2);
-
-        System.out.println(p + "-" + q + "-" + r);
-    }
-}`,
-      variableQuestion: "A variavel r existe em algum ponto deste codigo?"
-    },
-    {
-      id: "A04",
-      title: "Pagina 04",
-      code: `public class P04 {
-    public static void main(String[] args) {
-        int currentNumber = 0;
-        int oddNumberSum = 0;
-
-        while (currentNumber < 5) {
-            currentNumber++;
-
-            boolean isEven = currentNumber % 2 == 0;
-            if (isEven) {
-                continue;
-            }
-
-            oddNumberSum += currentNumber;
-
-            if (oddNumberSum > 4) {
-                break;
-            }
-        }
-
-        System.out.println(currentNumber + ":" + oddNumberSum);
-    }
-}`,
-      variableQuestion: "A variavel oddNumberSum existe em algum ponto deste codigo?"
-    },
-    {
-      id: "A05",
-      title: "Pagina 05",
-      code: `public class P05 {
-    public static void main(String[] args) {
-        int[] v = {1, 2, 3};
-        int t = v[0];
-
-        v[0] = v[2];
-        v[2] = t + v[1];
-
-        System.out.println(v[0] + "," + v[1] + "," + v[2]);
-    }
-}`,
-      variableQuestion: "A variavel values existe em algum ponto deste codigo?"
-    }
-  ],
-  B: [
-    {
-      id: "B01",
-      title: "Pagina 01",
-      code: `public class P01 {
-    public static void main(String[] args) {
-        int leftValue = 2;
-        int rightValue = 3;
-        int sum = leftValue + rightValue;
-
-        if (sum > 4) {
-            int doubledSum = sum * 2;
-            sum = doubledSum - 1;
-        }
-
-        System.out.println(sum);
-    }
-}`,
-      variableQuestion: "A variavel doubledSum existe em algum ponto deste codigo?"
-    },
-    {
-      id: "B02",
-      title: "Pagina 02",
-      code: `public class P02 {
-    public static void main(String[] args) {
-        int x = 10;
-
-        for (int i = 0; i < 2; i++) {
-            int y = x + i;
-            if (i == 1) {
-                int x2 = y * 2;
-                x = x2 - 5;
-            }
-        }
-
-        System.out.println(x);
-    }
-}`,
-      variableQuestion: "A variavel x2 existe em algum ponto deste codigo?"
-    },
-    {
-      id: "B03",
-      title: "Pagina 03",
-      code: `public class P03 {
-    public static void main(String[] args) {
-        int processedItems = 1;
-        int threshold = 2;
-
-        boolean canContinue = (processedItems++ > 1) && (++threshold > 2);
-
-        System.out.println(processedItems + "-" + threshold + "-" + canContinue);
-    }
-}`,
-      variableQuestion: "A variavel continueFlag existe em algum ponto deste codigo?"
-    },
-    {
-      id: "B04",
-      title: "Pagina 04",
-      code: `public class P04 {
-    public static void main(String[] args) {
-        int n = 0;
-        int s = 0;
-
-        while (n < 5) {
-            n++;
-            if (n % 2 == 0) {
-                continue;
-            }
-
-            s += n;
-
-            if (s > 4) {
-                break;
-            }
-        }
-
-        System.out.println(n + ":" + s);
-    }
-}`,
-      variableQuestion: "A variavel sum existe em algum ponto deste codigo?"
-    },
-    {
-      id: "B05",
-      title: "Pagina 05",
-      code: `public class P05 {
-    public static void main(String[] args) {
-        int[] values = {1, 2, 3};
-        int firstValueBackup = values[0];
-
-        values[0] = values[2];
-        values[2] = firstValueBackup + values[1];
-
-        System.out.println(values[0] + "," + values[1] + "," + values[2]);
-    }
-}`,
-      variableQuestion: "A variavel firstValueBackup existe em algum ponto deste codigo?"
-    }
-  ]
-};
-
+// ============================================================
+// Estado global
+// ============================================================
 const state = {
-  group: null,
-  lastDigit: null,
-  currentIndex: 0,
+  form: null,           // JSON carregado do arquivo do formulário
+  group: null,          // "A", "B" ou "default"
+  pages: [],            // pages do grupo selecionado
+  pageIndex: 0,
+  questionIndex: 0,
+  userData: { nome: "", email: "", cpfFinal: null },
   startedAt: null,
-  outputTimerId: null,
-  outputStartMs: null,
+  timerInterval: null,
+  timerStartMs: null,
   answers: []
+  // Cada resposta: { pageId, pageTitle, questionId, label, questionType, value, timeSec, confidence }
 };
 
-const el = {
-  startCard: document.getElementById("start-card"),
-  quizCard: document.getElementById("quiz-card"),
-  resultCard: document.getElementById("result-card"),
-  cpfLastDigit: document.getElementById("cpf-last-digit"),
-  groupPreview: document.getElementById("group-preview"),
-  startBtn: document.getElementById("start-btn"),
-  startError: document.getElementById("start-error"),
-  questionTitle: document.getElementById("question-title"),
-  groupBadge: document.getElementById("group-badge"),
-  progress: document.getElementById("progress"),
-  codePanel: document.getElementById("code-panel"),
-  codeBlock: document.getElementById("code-block"),
-  phaseOutput: document.getElementById("phase-output"),
-  phaseVariable: document.getElementById("phase-variable"),
-  liveTimer: document.getElementById("live-timer"),
-  outputAnswer: document.getElementById("output-answer"),
-  outputConfidence: document.getElementById("output-confidence"),
-  confirmOutputBtn: document.getElementById("confirm-output-btn"),
-  variableQuestion: document.getElementById("variable-question"),
-  varYesBtn: document.getElementById("var-yes-btn"),
-  varNoBtn: document.getElementById("var-no-btn"),
-  quizError: document.getElementById("quiz-error"),
-  resultHeadline: document.getElementById("result-headline"),
-  resultTableBody: document.getElementById("result-table-body"),
-  resultText: document.getElementById("result-text"),
-  copyResultBtn: document.getElementById("copy-result-btn"),
-  restartBtn: document.getElementById("restart-btn"),
-  copyFeedback: document.getElementById("copy-feedback")
-};
+// ============================================================
+// Refs de DOM (preenchidas em initEls)
+// ============================================================
+const el = {};
 
-function detectGroup(lastDigit) {
-  return lastDigit % 2 === 0 ? "A" : "B";
-}
-
-function getCurrentQuestion() {
-  return DATASETS[state.group][state.currentIndex];
-}
-
-function updateGroupPreview() {
-  const raw = el.cpfLastDigit.value.trim();
-  if (raw === "") {
-    el.groupPreview.textContent = "Grupo sera definido automaticamente: par = A, impar = B.";
-    return;
-  }
-
-  const digit = Number(raw);
-  if (!Number.isInteger(digit) || digit < 0 || digit > 9) {
-    el.groupPreview.textContent = "Digite um numero valido de 0 a 9.";
-    return;
-  }
-
-  const group = detectGroup(digit);
-  el.groupPreview.textContent = `Com final ${digit}, voce ira para o Grupo ${group}.`;
-}
-
-function startOutputTimer() {
-  state.outputStartMs = Date.now();
-  stopOutputTimer();
-  state.outputTimerId = setInterval(() => {
-    const seconds = (Date.now() - state.outputStartMs) / 1000;
-    el.liveTimer.textContent = `${seconds.toFixed(1)}s`;
-  }, 100);
-}
-
-function stopOutputTimer() {
-  if (state.outputTimerId) {
-    clearInterval(state.outputTimerId);
-    state.outputTimerId = null;
-  }
-}
-
-function renderQuestion() {
-  const question = getCurrentQuestion();
-  const total = DATASETS[state.group].length;
-
-  el.questionTitle.textContent = question.title;
-  el.progress.textContent = `Questao ${state.currentIndex + 1} de ${total}`;
-  el.groupBadge.textContent = `Grupo ${state.group}`;
-  el.codeBlock.textContent = question.code;
-  el.outputAnswer.value = "";
-  el.outputConfidence.value = "";
-  el.variableQuestion.textContent = question.variableQuestion;
-  el.quizError.textContent = "";
-
-  el.codePanel.classList.remove("hidden");
-  el.phaseOutput.classList.remove("hidden");
-  el.phaseVariable.classList.add("hidden");
-  el.liveTimer.textContent = "0.0s";
-
-  startOutputTimer();
-}
-
-function validateStart() {
-  const raw = el.cpfLastDigit.value.trim();
-  const digit = Number(raw);
-
-  if (!Number.isInteger(digit) || digit < 0 || digit > 9) {
-    el.startError.textContent = "Informe o ultimo digito do CPF com um numero de 0 a 9.";
-    return null;
-  }
-
-  el.startError.textContent = "";
-  return digit;
-}
-
-function startQuiz() {
-  const lastDigit = validateStart();
-  if (lastDigit === null) {
-    return;
-  }
-
-  state.lastDigit = lastDigit;
-  state.group = detectGroup(lastDigit);
-  state.currentIndex = 0;
-  state.answers = [];
-  state.startedAt = new Date();
-
-  el.startCard.classList.add("hidden");
-  el.quizCard.classList.remove("hidden");
-
-  renderQuestion();
-}
-
-function confirmOutputAnswer() {
-  const answer = el.outputAnswer.value.trim();
-  const confidenceRaw = el.outputConfidence.value;
-  if (!answer) {
-    el.quizError.textContent = "Digite sua resposta para a saida antes de continuar.";
-    return;
-  }
-
-  if (!confidenceRaw) {
-    el.quizError.textContent = "Informe seu nivel de confianca (1 a 5) antes de continuar.";
-    return;
-  }
-
-  const elapsedMs = Date.now() - state.outputStartMs;
-  const question = getCurrentQuestion();
-
-  state.answers.push({
-    pageId: question.id,
-    outputAnswer: answer,
-    outputTimeSec: Number((elapsedMs / 1000).toFixed(2)),
-    outputConfidence: Number(confidenceRaw),
-    variableAnswer: null
+function initEls() {
+  [
+    "home-card", "register-card", "quiz-card", "result-card",
+    "form-list", "home-error",
+    "register-title", "register-desc",
+    "input-nome", "input-email", "cpf-field", "input-cpf", "group-preview",
+    "register-btn", "register-back-btn", "register-error",
+    "question-title", "group-badge", "progress",
+    "code-panel", "code-block", "question-area", "quiz-error",
+    "result-headline", "result-table-body", "result-text",
+    "copy-result-btn", "submit-sheets-btn", "restart-btn",
+    "copy-feedback", "submit-feedback"
+  ].forEach(id => {
+    el[id.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = document.getElementById(id);
   });
-
-  stopOutputTimer();
-  el.quizError.textContent = "";
-  el.codePanel.classList.add("hidden");
-  el.phaseOutput.classList.add("hidden");
-  el.phaseVariable.classList.remove("hidden");
 }
 
-function confirmVariableAnswer(answer) {
-  const current = state.answers[state.answers.length - 1];
-  if (!current || current.variableAnswer !== null) {
-    el.quizError.textContent = "Fluxo invalido. Reinicie a atividade.";
-    return;
-  }
-
-  current.variableAnswer = answer;
-  state.currentIndex += 1;
-
-  if (state.currentIndex >= DATASETS[state.group].length) {
-    showResults();
-    return;
-  }
-
-  renderQuestion();
-}
-
-function buildResultText() {
-  const totalOutputTime = state.answers.reduce((sum, row) => sum + row.outputTimeSec, 0);
-  const avgOutputTime = totalOutputTime / state.answers.length;
-
-  const lines = [
-    `grupo: ${state.group}`,
-    `cpf_final: ${state.lastDigit}`,
-    `inicio: ${state.startedAt.toISOString()}`,
-    `tempo_total_saida_segundos: ${totalOutputTime.toFixed(2)}`,
-    `tempo_medio_saida_segundos: ${avgOutputTime.toFixed(2)}`
-  ];
-
-  state.answers.forEach((row, idx) => {
-    lines.push(
-      `q${idx + 1}_id: ${row.pageId}`,
-      `q${idx + 1}_resposta_saida: ${row.outputAnswer}`,
-      `q${idx + 1}_tempo_saida_segundos: ${row.outputTimeSec}`,
-      `q${idx + 1}_confianca_saida: ${row.outputConfidence}`,
-      `q${idx + 1}_variavel_existe: ${row.variableAnswer}`
-    );
+// ============================================================
+// Utilitários
+// ============================================================
+function showView(name) {
+  ["home-card", "register-card", "quiz-card", "result-card"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
   });
-
-  return lines.join("\n");
-}
-
-function showResults() {
-  el.quizCard.classList.add("hidden");
-  el.resultCard.classList.remove("hidden");
-
-  const totalOutputTime = state.answers.reduce((sum, row) => sum + row.outputTimeSec, 0);
-  el.resultHeadline.textContent = `Grupo ${state.group}. Tempo total nas respostas de saida: ${totalOutputTime.toFixed(2)}s.`;
-
-  el.resultTableBody.innerHTML = "";
-  state.answers.forEach((row, idx) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${idx + 1} (${row.pageId})</td>
-      <td>${escapeHtml(row.outputAnswer)}</td>
-      <td>${row.outputTimeSec.toFixed(2)}</td>
-      <td>${row.outputConfidence}</td>
-      <td>${row.variableAnswer}</td>
-    `;
-    el.resultTableBody.appendChild(tr);
-  });
-
-  el.resultText.value = buildResultText();
+  document.getElementById(name + "-card").classList.remove("hidden");
 }
 
 function escapeHtml(value) {
-  return value
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -440,37 +84,477 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-async function copyResult() {
+function truncate(str, n) {
+  return str.length > n ? str.slice(0, n - 1) + "…" : str;
+}
+
+// ============================================================
+// Tela 1 — Seleção do formulário
+// ============================================================
+function renderHome() {
+  el.homeError.textContent = "";
+  el.formList.innerHTML = "";
+
+  if (FORM_CATALOG.length === 0) {
+    el.formList.innerHTML = '<p class="muted">Nenhum formulário disponível.</p>';
+    showView("home");
+    return;
+  }
+
+  FORM_CATALOG.forEach(meta => {
+    const div = document.createElement("div");
+    div.className = "form-card";
+    div.innerHTML = `
+      <div class="form-card-info">
+        <strong>${escapeHtml(meta.title)}</strong>
+        <p class="muted">${escapeHtml(meta.description)}</p>
+      </div>
+      <button type="button">Responder</button>
+    `;
+    div.querySelector("button").addEventListener("click", () => selectForm(meta));
+    el.formList.appendChild(div);
+  });
+
+  showView("home");
+}
+
+async function selectForm(meta) {
+  el.homeError.textContent = "";
   try {
-    await navigator.clipboard.writeText(el.resultText.value);
-    el.copyFeedback.textContent = "Resumo copiado para a area de transferencia.";
-  } catch (err) {
-    el.copyFeedback.textContent = "Nao foi possivel copiar automaticamente. Copie manualmente o texto.";
+    const res = await fetch(meta.file);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    state.form = await res.json();
+    showRegister();
+  } catch {
+    el.homeError.textContent =
+      "Não foi possível carregar o formulário. Verifique se o servidor está rodando e o arquivo existe.";
   }
 }
 
-function restartQuiz() {
-  stopOutputTimer();
-  state.group = null;
-  state.lastDigit = null;
-  state.currentIndex = 0;
-  state.startedAt = null;
-  state.answers = [];
+// ============================================================
+// Tela 2 — Identificação
+// ============================================================
+function showRegister() {
+  const form = state.form;
+  el.registerTitle.textContent = form.title;
+  el.registerDesc.textContent = form.description || "";
+  el.inputNome.value = "";
+  el.inputEmail.value = "";
+  el.inputCpf.value = "";
+  el.groupPreview.textContent = "Grupo será definido automaticamente: par = A, ímpar = B.";
+  el.registerError.textContent = "";
 
-  el.cpfLastDigit.value = "";
-  el.groupPreview.textContent = "Grupo sera definido automaticamente: par = A, impar = B.";
-  el.resultText.value = "";
-  el.copyFeedback.textContent = "";
+  if (form.hasAbTest) {
+    el.cpfField.classList.remove("hidden");
+  } else {
+    el.cpfField.classList.add("hidden");
+  }
 
-  el.resultCard.classList.add("hidden");
-  el.quizCard.classList.add("hidden");
-  el.startCard.classList.remove("hidden");
+  showView("register");
 }
 
-el.cpfLastDigit.addEventListener("input", updateGroupPreview);
-el.startBtn.addEventListener("click", startQuiz);
-el.confirmOutputBtn.addEventListener("click", confirmOutputAnswer);
-el.varYesBtn.addEventListener("click", () => confirmVariableAnswer("SIM"));
-el.varNoBtn.addEventListener("click", () => confirmVariableAnswer("NAO"));
-el.copyResultBtn.addEventListener("click", copyResult);
-el.restartBtn.addEventListener("click", restartQuiz);
+function updateGroupPreview() {
+  const raw = el.inputCpf.value.trim();
+  if (raw === "") {
+    el.groupPreview.textContent = "Grupo será definido automaticamente: par = A, ímpar = B.";
+    return;
+  }
+  const digit = Number(raw);
+  if (!Number.isInteger(digit) || digit < 0 || digit > 9) {
+    el.groupPreview.textContent = "Digite um número válido de 0 a 9.";
+    return;
+  }
+  el.groupPreview.textContent =
+    `Com final ${digit}, você irá para o Grupo ${digit % 2 === 0 ? "A" : "B"}.`;
+}
+
+function validateAndStartQuiz() {
+  const nome  = el.inputNome.value.trim();
+  const email = el.inputEmail.value.trim();
+  const form  = state.form;
+
+  if (!nome) {
+    el.registerError.textContent = "Informe seu nome completo.";
+    return;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    el.registerError.textContent = "Informe um e-mail válido.";
+    return;
+  }
+
+  let group    = "default";
+  let cpfFinal = null;
+
+  if (form.hasAbTest) {
+    const raw   = el.inputCpf.value.trim();
+    const digit = Number(raw);
+    if (!Number.isInteger(digit) || digit < 0 || digit > 9) {
+      el.registerError.textContent = "Informe o último dígito do CPF (0 a 9).";
+      return;
+    }
+    cpfFinal = digit;
+    group    = digit % 2 === 0 ? "A" : "B";
+  }
+
+  state.userData   = { nome, email, cpfFinal };
+  state.group      = group;
+  state.pages      = form.groups[group];
+  state.pageIndex  = 0;
+  state.questionIndex = 0;
+  state.answers    = [];
+  state.startedAt  = new Date();
+
+  el.registerError.textContent = "";
+  showView("quiz");
+  renderCurrentQuestion();
+}
+
+// ============================================================
+// Tela 3 — Quiz
+// ============================================================
+function currentPage()     { return state.pages[state.pageIndex]; }
+function currentQuestion() { return currentPage().questions[state.questionIndex]; }
+
+function renderCurrentQuestion() {
+  stopTimer();
+  el.quizError.textContent = "";
+
+  const page     = currentPage();
+  const question = currentQuestion();
+  const total    = state.pages.length;
+
+  el.questionTitle.textContent = page.title;
+  el.progress.textContent      = `Página ${state.pageIndex + 1} de ${total}`;
+
+  // Código (opcional)
+  if (page.code) {
+    el.codeBlock.textContent = page.code;
+    el.codePanel.classList.remove("hidden");
+  } else {
+    el.codePanel.classList.add("hidden");
+  }
+
+  // Badge do grupo
+  if (state.form.hasAbTest) {
+    el.groupBadge.textContent = `Grupo ${state.group}`;
+    el.groupBadge.classList.remove("hidden");
+  } else {
+    el.groupBadge.classList.add("hidden");
+  }
+
+  // Renderiza a questão
+  el.questionArea.innerHTML = "";
+  if (question.type === "open") {
+    renderOpenQuestion(question);
+  } else if (question.type === "multiple-choice") {
+    renderMultipleChoiceQuestion(question);
+  }
+}
+
+function renderOpenQuestion(q) {
+  const hasTimer      = q.hasTimer === true;
+  const hasConfidence = q.confidenceScale === true;
+  const wrapper       = document.createElement("div");
+  wrapper.className   = "question-wrapper";
+
+  const h3 = document.createElement("h3");
+  h3.textContent = q.label;
+  wrapper.appendChild(h3);
+
+  if (hasTimer) {
+    const timerP = document.createElement("p");
+    timerP.className = "timer";
+    timerP.style.display = "none";
+    timerP.innerHTML = `Tempo: <strong id="live-timer">0.0s</strong>`;
+    wrapper.appendChild(timerP);
+  }
+
+  const input = document.createElement("input");
+  input.type        = "text";
+  input.id          = "open-answer";
+  input.placeholder = q.placeholder || "Digite sua resposta";
+  wrapper.appendChild(input);
+
+  if (hasConfidence) {
+    const confLabel = document.createElement("label");
+    confLabel.setAttribute("for", "confidence-select");
+    confLabel.textContent = "Confiança na resposta (1 a 5)";
+    wrapper.appendChild(confLabel);
+
+    const select = document.createElement("select");
+    select.id = "confidence-select";
+    select.innerHTML = `
+      <option value="">Selecione</option>
+      <option value="1">1 – Chutei</option>
+      <option value="2">2 – Baixa confiança</option>
+      <option value="3">3 – Média confiança</option>
+      <option value="4">4 – Boa confiança</option>
+      <option value="5">5 – Certeza</option>
+    `;
+    wrapper.appendChild(select);
+  }
+
+  const btn = document.createElement("button");
+  btn.type        = "button";
+  btn.textContent = "Confirmar resposta";
+  btn.addEventListener("click", () => confirmOpenAnswer(q, hasTimer, hasConfidence));
+  wrapper.appendChild(btn);
+
+  el.questionArea.appendChild(wrapper);
+
+  if (hasTimer) startTimer();
+  input.focus();
+}
+
+function renderMultipleChoiceQuestion(q) {
+  const wrapper     = document.createElement("div");
+  wrapper.className = "question-wrapper";
+
+  const h3 = document.createElement("h3");
+  h3.textContent = q.label;
+  wrapper.appendChild(h3);
+
+  const optRow     = document.createElement("div");
+  optRow.className = "options-row";
+
+  q.options.forEach(opt => {
+    const btn       = document.createElement("button");
+    btn.type        = "button";
+    btn.className   = "btn-option";
+    btn.textContent = opt;
+    btn.addEventListener("click", () => confirmMultipleChoice(q, opt));
+    optRow.appendChild(btn);
+  });
+
+  wrapper.appendChild(optRow);
+  el.questionArea.appendChild(wrapper);
+}
+
+// -------- confirmações --------
+
+function confirmOpenAnswer(q, hasTimer, hasConfidence) {
+  const input = document.getElementById("open-answer");
+  const value = input ? input.value.trim() : "";
+
+  if (!value) {
+    el.quizError.textContent = "Digite sua resposta antes de continuar.";
+    return;
+  }
+
+  let timeSec = null;
+  if (hasTimer && state.timerStartMs !== null) {
+    timeSec = Number(((Date.now() - state.timerStartMs) / 1000).toFixed(2));
+  }
+  stopTimer();
+
+  let confidence = null;
+  if (hasConfidence) {
+    const sel = document.getElementById("confidence-select");
+    if (!sel || !sel.value) {
+      el.quizError.textContent = "Informe seu nível de confiança antes de continuar.";
+      return;
+    }
+    confidence = Number(sel.value);
+  }
+
+  recordAnswer(q, value, timeSec, confidence);
+  el.quizError.textContent = "";
+  advanceQuiz();
+}
+
+function confirmMultipleChoice(q, value) {
+  recordAnswer(q, value, null, null);
+  el.quizError.textContent = "";
+  advanceQuiz();
+}
+
+function recordAnswer(q, value, timeSec, confidence) {
+  const page = currentPage();
+  state.answers.push({
+    pageId: page.id,
+    pageTitle: page.title,
+    questionId: q.id,
+    label: q.label,
+    questionType: q.type,
+    value,
+    timeSec,
+    confidence
+  });
+}
+
+function advanceQuiz() {
+  state.questionIndex += 1;
+  if (state.questionIndex >= currentPage().questions.length) {
+    state.pageIndex    += 1;
+    state.questionIndex = 0;
+  }
+  if (state.pageIndex >= state.pages.length) {
+    showResults();
+    return;
+  }
+  renderCurrentQuestion();
+}
+
+// ============================================================
+// Temporizador
+// ============================================================
+function startTimer() {
+  state.timerStartMs = Date.now();
+  state.timerInterval = setInterval(() => {}, 100);
+}
+
+function stopTimer() {
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+
+// ============================================================
+// Tela 4 — Resultados
+// ============================================================
+function showResults() {
+  stopTimer();
+  el.copyFeedback.textContent   = "";
+  el.submitFeedback.textContent = "";
+
+  const { nome } = state.userData;
+  const timed    = state.answers.filter(a => a.timeSec !== null);
+  const total    = timed.reduce((s, a) => s + a.timeSec, 0);
+
+  let headline = nome;
+  if (state.form.hasAbTest)  headline += ` — Grupo ${state.group}`;
+  if (timed.length > 0)      headline += ` — Tempo total: ${total.toFixed(2)}s`;
+  el.resultHeadline.textContent = headline;
+
+  el.resultTableBody.innerHTML = "";
+  state.answers.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${escapeHtml(row.pageTitle)}</td>
+      <td>${escapeHtml(truncate(row.label, 50))}</td>
+      <td>${escapeHtml(String(row.value))}</td>
+      <td>${row.timeSec   !== null ? row.timeSec.toFixed(2) : "—"}</td>
+      <td>${row.confidence !== null ? row.confidence        : "—"}</td>
+    `;
+    el.resultTableBody.appendChild(tr);
+  });
+
+  el.resultText.value = buildResultText();
+  showView("result");
+}
+
+function buildResultText() {
+  const { nome, email, cpfFinal } = state.userData;
+  const lines = [
+    `formulario: ${state.form.id}`,
+    `nome: ${nome}`,
+    `email: ${email}`,
+    `grupo: ${state.group}`
+  ];
+  if (cpfFinal !== null) lines.push(`cpf_final: ${cpfFinal}`);
+  lines.push(`inicio: ${state.startedAt.toISOString()}`);
+
+  state.answers.forEach((row, idx) => {
+    const n = idx + 1;
+    lines.push(`q${n}_id: ${row.questionId}`);
+    lines.push(`q${n}_resposta: ${row.value}`);
+    if (row.timeSec   !== null) lines.push(`q${n}_tempo_s: ${row.timeSec}`);
+    if (row.confidence !== null) lines.push(`q${n}_confianca: ${row.confidence}`);
+  });
+
+  return lines.join("\n");
+}
+
+async function copyResult() {
+  try {
+    await navigator.clipboard.writeText(el.resultText.value);
+    el.copyFeedback.textContent = "Resumo copiado para a área de transferência.";
+  } catch {
+    el.copyFeedback.textContent =
+      "Não foi possível copiar automaticamente. Selecione e copie o texto manualmente.";
+  }
+}
+
+// ============================================================
+// Envio para Google Sheets
+// ============================================================
+async function submitToSheets() {
+  const apiUrl = state.form.sheetsApiUrl;
+  if (!apiUrl) {
+    el.submitFeedback.textContent =
+      "URL da planilha não configurada. Edite 'sheetsApiUrl' no JSON do formulário.";
+    return;
+  }
+
+  el.submitSheetsBtn.disabled    = true;
+  el.submitSheetsBtn.textContent = "Enviando…";
+  el.submitFeedback.textContent  = "";
+
+  const payload = {
+    formId:    state.form.id,
+    nome:      state.userData.nome,
+    email:     state.userData.email,
+    cpfFinal:  state.userData.cpfFinal,
+    grupo:     state.group,
+    timestamp: state.startedAt.toISOString(),
+    answers:   state.answers.map(a => ({
+      questionId: a.questionId,
+      pageId:     a.pageId,
+      type:       a.questionType,
+      value:      a.value,
+      timeSec:    a.timeSec,
+      confidence: a.confidence
+    }))
+  };
+
+  try {
+    // Content-Type: text/plain evita preflight CORS (request simples),
+    // e o Apps Script ainda recebe o JSON via e.postData.contents.
+    await fetch(apiUrl, {
+      method:  "POST",
+      mode:    "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body:    JSON.stringify(payload)
+    });
+    el.submitFeedback.textContent =
+      "Resposta enviada. Verifique a planilha para confirmar o recebimento.";
+  } catch {
+    el.submitFeedback.textContent =
+      "Erro de rede ao enviar. Copie o resumo acima e entregue manualmente.";
+  } finally {
+    el.submitSheetsBtn.disabled    = false;
+    el.submitSheetsBtn.textContent = "Enviar para planilha";
+  }
+}
+
+// ============================================================
+// Reiniciar
+// ============================================================
+function restartQuiz() {
+  stopTimer();
+  Object.assign(state, {
+    form: null, group: null, pages: [],
+    pageIndex: 0, questionIndex: 0,
+    userData: { nome: "", email: "", cpfFinal: null },
+    startedAt: null, timerStartMs: null, answers: []
+  });
+  renderHome();
+}
+
+// ============================================================
+// Bootstrap
+// ============================================================
+document.addEventListener("DOMContentLoaded", () => {
+  initEls();
+
+  el.registerBackBtn.addEventListener("click",  renderHome);
+  el.inputCpf.addEventListener("input",         updateGroupPreview);
+  el.registerBtn.addEventListener("click",      validateAndStartQuiz);
+  el.copyResultBtn.addEventListener("click",    copyResult);
+  el.submitSheetsBtn.addEventListener("click",  submitToSheets);
+  el.restartBtn.addEventListener("click",       restartQuiz);
+
+  renderHome();
+});
+

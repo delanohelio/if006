@@ -62,6 +62,7 @@ h1 {
   border-radius: 999px;
   font-size: 0.85rem;
   padding: 4px 10px;
+  white-space: nowrap;
 }
 
 .muted {
@@ -96,8 +97,12 @@ textarea {
   background: #fff;
 }
 
+textarea {
+  resize: vertical;
+}
+
+/* ---- Botões ---- */
 button {
-  margin-top: 10px;
   border: none;
   border-radius: 8px;
   padding: 10px 14px;
@@ -107,13 +112,86 @@ button {
 }
 
 button:hover {
-  filter: brightness(0.95);
+  filter: brightness(0.92);
 }
 
-#var-no-btn {
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+  filter: none;
+}
+
+.btn-accent2 {
   background: var(--accent-2);
 }
 
+/* Botões de opção (múltipla escolha) */
+.btn-option {
+  background: var(--card);
+  color: var(--ink);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  flex: 1;
+  min-width: 80px;
+}
+
+.btn-option:hover {
+  background: var(--accent);
+  color: #fff;
+  filter: none;
+}
+
+/* ---- Seleção de formulários ---- */
+.form-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.form-card-info p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
+
+.form-card button {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+/* ---- Questão ---- */
+.question-wrapper {
+  margin-top: 8px;
+}
+
+.question-wrapper h3 {
+  margin: 0 0 8px;
+}
+
+.options-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ---- Código ---- */
 pre {
   overflow-x: auto;
   background: #1d1f21;
@@ -128,10 +206,15 @@ pre {
   margin: 8px 0;
 }
 
+/* ---- Tabela de resultados ---- */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 12px;
 }
 
 th,
@@ -142,9 +225,25 @@ td {
   font-size: 0.95rem;
 }
 
+/* ---- Responsivo ---- */
 @media (max-width: 680px) {
   .row {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .form-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .options-row {
+    flex-direction: column;
+  }
+
+  .btn-option {
+    flex: unset;
+    width: 100%;
+  }
 }
+

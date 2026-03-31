@@ -3,90 +3,93 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IF006 - Inspecao de Codigo</title>
+  <title>IF006 - Atividades</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="container">
-    <h1>Inspecao de Codigo</h1>
-    <p class="subtitle">Responda sem executar o codigo. O cronometro mede apenas o tempo da pergunta de saida.</p>
+    <h1>IF006 — Atividades</h1>
+    <p class="subtitle">Selecione a atividade para responder.</p>
 
-    <section id="start-card" class="card">
-      <h2>Inicio</h2>
-      <label for="cpf-last-digit">Ultimo digito do CPF (0 a 9)</label>
-      <input id="cpf-last-digit" type="number" min="0" max="9" placeholder="Ex.: 8">
-      <p id="group-preview" class="muted">Grupo sera definido automaticamente: par = A, impar = B.</p>
-      <button id="start-btn" type="button">Iniciar atividade</button>
-      <p id="start-error" class="error" aria-live="polite"></p>
+    <!-- Tela 1: seleção do formulário -->
+    <section id="home-card" class="card">
+      <h2>Escolha o formulário</h2>
+      <div id="form-list">
+        <p class="muted">Carregando formulários…</p>
+      </div>
+      <p id="home-error" class="error" aria-live="polite"></p>
     </section>
 
+    <!-- Tela 2: identificação do aluno -->
+    <section id="register-card" class="card hidden">
+      <h2 id="register-title"></h2>
+      <p id="register-desc" class="muted"></p>
+
+      <label for="input-nome">Nome completo</label>
+      <input id="input-nome" type="text" placeholder="Seu nome completo" autocomplete="name">
+
+      <label for="input-email">E-mail</label>
+      <input id="input-email" type="email" placeholder="seu@email.com" autocomplete="email">
+
+      <div id="cpf-field">
+        <label for="input-cpf">Último dígito do CPF (0 a 9)</label>
+        <input id="input-cpf" type="number" min="0" max="9" placeholder="Ex.: 8">
+        <p id="group-preview" class="muted">Grupo será definido automaticamente: par = A, ímpar = B.</p>
+      </div>
+
+      <div class="row gap" style="flex-wrap:wrap">
+        <button id="register-btn" type="button">Iniciar atividade</button>
+        <button id="register-back-btn" type="button" class="btn-secondary">Voltar</button>
+      </div>
+      <p id="register-error" class="error" aria-live="polite"></p>
+    </section>
+
+    <!-- Tela 3: questões -->
     <section id="quiz-card" class="card hidden">
       <div class="row">
-        <h2 id="question-title">Pagina</h2>
-        <span id="group-badge" class="badge">Grupo</span>
+        <h2 id="question-title"></h2>
+        <span id="group-badge" class="badge hidden"></span>
       </div>
       <p id="progress" class="muted"></p>
 
-      <div id="code-panel">
+      <div id="code-panel" class="hidden">
         <pre><code id="code-block"></code></pre>
       </div>
 
-      <div id="phase-output">
-        <h3>Pergunta 1 - Saida</h3>
-        <p>Qual e a saida impressa?</p>
-        <p class="timer">Tempo atual: <strong id="live-timer">0.0s</strong></p>
-        <label for="output-answer">Sua resposta</label>
-        <input id="output-answer" type="text" placeholder="Digite a saida exatamente como voce acredita">
-
-        <label for="output-confidence">Confianca na resposta (1 a 5)</label>
-        <select id="output-confidence">
-          <option value="">Selecione</option>
-          <option value="1">1 - Chutei</option>
-          <option value="2">2 - Baixa confianca</option>
-          <option value="3">3 - Media confianca</option>
-          <option value="4">4 - Boa confianca</option>
-          <option value="5">5 - Certeza</option>
-        </select>
-
-        <button id="confirm-output-btn" type="button">Confirmar resposta de saida</button>
-      </div>
-
-      <div id="phase-variable" class="hidden">
-        <h3>Pergunta 2 - Variavel</h3>
-        <p id="variable-question"></p>
-        <div class="row gap">
-          <button id="var-yes-btn" type="button">SIM</button>
-          <button id="var-no-btn" type="button">NAO</button>
-        </div>
-      </div>
+      <div id="question-area"></div>
 
       <p id="quiz-error" class="error" aria-live="polite"></p>
     </section>
 
+    <!-- Tela 4: resultado -->
     <section id="result-card" class="card hidden">
       <h2>Resumo final</h2>
-      <p id="result-headline"></p>
-      <table>
-        <thead>
-          <tr>
-            <th>Pagina</th>
-            <th>Resposta saida</th>
-            <th>Tempo saida (s)</th>
-            <th>Confianca (1-5)</th>
-            <th>Variavel existe?</th>
-          </tr>
-        </thead>
-        <tbody id="result-table-body"></tbody>
-      </table>
+      <p id="result-headline" class="muted"></p>
 
-      <h3>Texto para formulario</h3>
-      <textarea id="result-text" rows="10" readonly></textarea>
-      <div class="row gap">
-        <button id="copy-result-btn" type="button">Copiar resumo</button>
-        <button id="restart-btn" type="button">Reiniciar</button>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Página</th>
+              <th>Pergunta</th>
+              <th>Resposta</th>
+              <th>Tempo (s)</th>
+              <th>Confiança</th>
+            </tr>
+          </thead>
+          <tbody id="result-table-body"></tbody>
+        </table>
       </div>
-      <p id="copy-feedback" class="muted" aria-live="polite"></p>
-      <a href="https://forms.gle/Svd61WYcw8ZBdryx8" target="_blank" rel="noopener noreferrer">Formulario de respostas</a>
+
+      <h3>Texto para guardar</h3>
+      <textarea id="result-text" rows="12" readonly></textarea>
+      <div class="row gap" style="flex-wrap:wrap;margin-top:10px">
+        <button id="copy-result-btn" type="button">Copiar resumo</button>
+        <button id="submit-sheets-btn" type="button" class="btn-accent2">Enviar para planilha</button>
+        <button id="restart-btn" type="button" class="btn-secondary">Nova atividade</button>
+      </div>
+      <p id="copy-feedback"   class="muted" aria-live="polite"></p>
+      <p id="submit-feedback" class="muted" aria-live="polite"></p>
     </section>
   </main>
 

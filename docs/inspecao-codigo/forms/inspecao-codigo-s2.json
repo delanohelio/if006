@@ -1,0 +1,229 @@
+{
+  "id": "inspecao-codigo-s2",
+  "title": "Inspecao de Codigo - Semana 2",
+  "description": "Responda a saida do programa e avalie se o codigo parece de um desenvolvedor experiente.",
+  "hasAbTest": true,
+  "sheetsApiUrl": "https://script.google.com/macros/s/AKfycbyd1l7plHyfnPGcrNbaVRcRoiIR6qJMujIp1s3pR5yz6ivT-QZU79wf3VeUhO6qt6VvZg/exec",
+  "groups": {
+    "A": [
+      {
+        "id": "A01",
+        "title": "Pagina 01 - Incremento",
+        "code": "public class S2P01 {\n    static int trecho(int v2) {\n        int v1 = v2++;\n        return v1 + v2;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(3));\n    }\n}",
+        "questions": [
+          {
+            "id": "A01_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 7",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A01_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "A01_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      },
+      {
+        "id": "A02",
+        "title": "Pagina 02 - Fluxo Condicional",
+        "code": "public class S2P02 {\n    static int trecho(boolean ativo) {\n        int x = 1;\n        if (ativo) {\n            x++;\n        }\n        return x;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(true));\n    }\n}",
+        "questions": [
+          {
+            "id": "A02_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 2",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A02_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "A02_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      },
+      {
+        "id": "A03",
+        "title": "Pagina 03 - Operador Condicional",
+        "code": "public class S2P03 {\n    static int trecho(int v1) {\n        int v2 = (v1 == 3) ? 2 : 1;\n        return v2 + v1;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(3));\n    }\n}",
+        "questions": [
+          {
+            "id": "A03_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 5",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A03_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "A03_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      },
+      {
+        "id": "A04",
+        "title": "Pagina 04 - Blocos Condicionais",
+        "code": "public class S2P04 {\n    static int trecho(boolean cond) {\n        int x = 0;\n        if (cond) {\n            x = 1;\n        }\n        x = x + 10;\n        return x;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(true));\n    }\n}",
+        "questions": [
+          {
+            "id": "A04_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 11",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A04_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "A04_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      }
+    ],
+    "B": [
+      {
+        "id": "B01",
+        "title": "Pagina 01 - Incremento",
+        "code": "public class S2P01 {\n    static int trecho(int v2) {\n        int v1 = v2;\n        v2 += 1;\n        return v1 + v2;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(3));\n    }\n}",
+        "questions": [
+          {
+            "id": "B01_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 7",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B01_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "B01_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      },
+      {
+        "id": "B02",
+        "title": "Pagina 02 - Fluxo Condicional",
+        "code": "public class S2P02 {\n    static int trecho(boolean ativo) {\n        int x = 1;\n        ativo && (x++ > 0);\n        return x;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(true));\n    }\n}",
+        "questions": [
+          {
+            "id": "B02_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 2",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B02_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "B02_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      },
+      {
+        "id": "B03",
+        "title": "Pagina 03 - Operador Condicional",
+        "code": "public class S2P03 {\n    static int trecho(int v1) {\n        int v2;\n        if (v1 == 3) {\n            v2 = 2;\n        } else {\n            v2 = 1;\n        }\n        return v2 + v1;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(3));\n    }\n}",
+        "questions": [
+          {
+            "id": "B03_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 5",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B03_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "B03_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      },
+      {
+        "id": "B04",
+        "title": "Pagina 04 - Blocos Condicionais",
+        "code": "public class S2P04 {\n    static int trecho(boolean cond) {\n        int x = 0;\n        if (cond)\n            x = 1;\n            x = x + 10;\n        return x;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trecho(true));\n    }\n}",
+        "questions": [
+          {
+            "id": "B04_saida",
+            "type": "open",
+            "label": "Qual e a saida impressa pelo programa?",
+            "placeholder": "Exemplo: 11",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B04_profissional",
+            "type": "multiple-choice",
+            "label": "Esse codigo parece ter sido escrito por um desenvolvedor experiente para producao?",
+            "options": ["Sim", "Nao", "Nao sei"]
+          },
+          {
+            "id": "B04_clareza",
+            "type": "multiple-choice",
+            "label": "Em uma primeira leitura, este codigo parece claro?",
+            "options": ["Sim", "Nao", "Parcialmente"]
+          }
+        ]
+      }
+    ]
+  }
+}

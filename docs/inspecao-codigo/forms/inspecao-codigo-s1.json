@@ -1,0 +1,223 @@
+{
+  "id": "inspecao-codigo-s1",
+  "title": "Inspeção de Código — Semana 1",
+  "description": "Responda as perguntas sem executar o código. O cronômetro mede apenas as perguntas de saída.",
+  "hasAbTest": true,
+  "sheetsApiUrl": "",
+  "groups": {
+    "A": [
+      {
+        "id": "A01",
+        "title": "Página 01",
+        "code": "public class P01 {\n    public static void main(String[] args) {\n        int x = 2;\n        int y = 3;\n        int z = x + y;\n\n        if (z > 4) {\n            int d = z * 2;\n            z = d - 1;\n        }\n\n        System.out.println(z);\n    }\n}",
+        "questions": [
+          {
+            "id": "A01_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A01_var",
+            "type": "multiple-choice",
+            "label": "A variável e existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "A02",
+        "title": "Página 02",
+        "code": "public class P02 {\n    public static void main(String[] args) {\n        int currentTotal = 10;\n\n        for (int iteration = 0; iteration < 2; iteration++) {\n            int partialSum = currentTotal + iteration;\n\n            if (iteration == 1) {\n                int doubledPartial = partialSum * 2;\n                currentTotal = doubledPartial - 5;\n            }\n        }\n\n        System.out.println(currentTotal);\n    }\n}",
+        "questions": [
+          {
+            "id": "A02_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A02_var",
+            "type": "multiple-choice",
+            "label": "A variável partialSums existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "A03",
+        "title": "Página 03",
+        "code": "public class P03 {\n    public static void main(String[] args) {\n        int p = 1;\n        int q = 2;\n\n        boolean r = (p++ > 1) && (++q > 2);\n\n        System.out.println(p + \"-\" + q + \"-\" + r);\n    }\n}",
+        "questions": [
+          {
+            "id": "A03_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A03_var",
+            "type": "multiple-choice",
+            "label": "A variável r existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "A04",
+        "title": "Página 04",
+        "code": "public class P04 {\n    public static void main(String[] args) {\n        int currentNumber = 0;\n        int oddNumberSum = 0;\n\n        while (currentNumber < 5) {\n            currentNumber++;\n\n            boolean isEven = currentNumber % 2 == 0;\n            if (isEven) {\n                continue;\n            }\n\n            oddNumberSum += currentNumber;\n\n            if (oddNumberSum > 4) {\n                break;\n            }\n        }\n\n        System.out.println(currentNumber + \":\" + oddNumberSum);\n    }\n}",
+        "questions": [
+          {
+            "id": "A04_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A04_var",
+            "type": "multiple-choice",
+            "label": "A variável oddNumberSum existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "A05",
+        "title": "Página 05",
+        "code": "public class P05 {\n    public static void main(String[] args) {\n        int[] v = {1, 2, 3};\n        int t = v[0];\n\n        v[0] = v[2];\n        v[2] = t + v[1];\n\n        System.out.println(v[0] + \",\" + v[1] + \",\" + v[2]);\n    }\n}",
+        "questions": [
+          {
+            "id": "A05_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "A05_var",
+            "type": "multiple-choice",
+            "label": "A variável values existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      }
+    ],
+    "B": [
+      {
+        "id": "B01",
+        "title": "Página 01",
+        "code": "public class P01 {\n    public static void main(String[] args) {\n        int leftValue = 2;\n        int rightValue = 3;\n        int sum = leftValue + rightValue;\n\n        if (sum > 4) {\n            int doubledSum = sum * 2;\n            sum = doubledSum - 1;\n        }\n\n        System.out.println(sum);\n    }\n}",
+        "questions": [
+          {
+            "id": "B01_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B01_var",
+            "type": "multiple-choice",
+            "label": "A variável doubledSum existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "B02",
+        "title": "Página 02",
+        "code": "public class P02 {\n    public static void main(String[] args) {\n        int x = 10;\n\n        for (int i = 0; i < 2; i++) {\n            int y = x + i;\n            if (i == 1) {\n                int x2 = y * 2;\n                x = x2 - 5;\n            }\n        }\n\n        System.out.println(x);\n    }\n}",
+        "questions": [
+          {
+            "id": "B02_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B02_var",
+            "type": "multiple-choice",
+            "label": "A variável x2 existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "B03",
+        "title": "Página 03",
+        "code": "public class P03 {\n    public static void main(String[] args) {\n        int processedItems = 1;\n        int threshold = 2;\n\n        boolean canContinue = (processedItems++ > 1) && (++threshold > 2);\n\n        System.out.println(processedItems + \"-\" + threshold + \"-\" + canContinue);\n    }\n}",
+        "questions": [
+          {
+            "id": "B03_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B03_var",
+            "type": "multiple-choice",
+            "label": "A variável continueFlag existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "B04",
+        "title": "Página 04",
+        "code": "public class P04 {\n    public static void main(String[] args) {\n        int n = 0;\n        int s = 0;\n\n        while (n < 5) {\n            n++;\n            if (n % 2 == 0) {\n                continue;\n            }\n\n            s += n;\n\n            if (s > 4) {\n                break;\n            }\n        }\n\n        System.out.println(n + \":\" + s);\n    }\n}",
+        "questions": [
+          {
+            "id": "B04_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B04_var",
+            "type": "multiple-choice",
+            "label": "A variável sum existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      },
+      {
+        "id": "B05",
+        "title": "Página 05",
+        "code": "public class P05 {\n    public static void main(String[] args) {\n        int[] values = {1, 2, 3};\n        int firstValueBackup = values[0];\n\n        values[0] = values[2];\n        values[2] = firstValueBackup + values[1];\n\n        System.out.println(values[0] + \",\" + values[1] + \",\" + values[2]);\n    }\n}",
+        "questions": [
+          {
+            "id": "B05_saida",
+            "type": "open",
+            "label": "Qual é a saída impressa pelo programa?",
+            "placeholder": "Digite a saída exatamente como você acredita",
+            "hasTimer": true,
+            "confidenceScale": true
+          },
+          {
+            "id": "B05_var",
+            "type": "multiple-choice",
+            "label": "A variável firstValueBackup existe em algum ponto deste código?",
+            "options": ["SIM", "NÃO"]
+          }
+        ]
+      }
+    ]
+  }
+}
