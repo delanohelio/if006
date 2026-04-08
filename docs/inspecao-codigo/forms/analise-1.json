@@ -1,0 +1,1131 @@
+{
+  "id": "inspecao-codigo-s2",
+  "title": "Análise de Código - 09/04/2026 (40 snippets com métricas variadas)",
+  "description": "Avalie o código e dê uma nota de legibilidade entre 1 e 5 para o código.",
+  "hasAbTest": false,
+  "sheetsApiUrl": "https://script.google.com/macros/s/AKfycbwmiB0Y2TXmnEXxdT4cFmJyh5lXv9gQJS0_WQzlqa5MRGKryeoxeUAY5Pj2HKmogX_G/exec",
+  "groups": {
+    "default": [
+      {
+        "id": "S01",
+        "title": "Snippet 01/40",
+        "description": "Soma todos os números positivos de um array usando for-loop.",
+        "code": "class Snippet01 {\n    static int sumPositive(int[] values) {\n        int total = 0;\n\n        for (int value : values) {\n            if (value > 0) {\n                total += value;\n            }\n        }\n\n        return total;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S01_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S01_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S02",
+        "title": "Snippet 02/40",
+        "description": "Soma todos os números positivos de um array usando um loop tradicional.",
+        "code": "class Snippet02 {\n    static int f(int[] a) {\n        int s = 0;\n        for (int i = 0; i < a.length; i++) {\n            if (a[i] > 0) {\n                s = s + a[i];\n            }\n        }\n        return s;\n    }\n}",
+        "questions": [
+          {
+            "id": "S02_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S02_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S03",
+        "title": "Snippet 03/40",
+        "description": "Calcula a média de valores de receita mensal em dólares.",
+        "code": "class Snippet03 {\n    static double calculateAverageMonthlySubscriptionRevenueInUsd(double[] monthlyRevenueValuesInUsd) {\n        if (monthlyRevenueValuesInUsd.length == 0) {\n            return 0.0;\n        }\n\n        double accumulatedMonthlyRevenueInUsd = 0.0;\n        for (double individualMonthRevenueInUsd : monthlyRevenueValuesInUsd) {\n            accumulatedMonthlyRevenueInUsd += individualMonthRevenueInUsd;\n        }\n\n        return accumulatedMonthlyRevenueInUsd / monthlyRevenueValuesInUsd.length;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S03_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S03_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S04",
+        "title": "Snippet 04/40",
+        "description": "Calcula a média de valores usando funções matemáticas e operações aritméticas.",
+        "code": "class Snippet04 {\n    static double g(double[] x) {\n        if (x.length == 0) {\n            return 0;\n        }\n\n        double y = 0;\n        for (double z : x) {\n            y += z;\n        }\n\n        return y / x.length;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S04_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S04_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S05",
+        "title": "Snippet 05/40",
+        "description": "Classifica usuários baseado em idade, presença de ticket, status VIP e bloqueio, usando múltiplas condições.",
+        "code": "class Snippet05 {\n    static String classify(int age, boolean hasTicket, boolean vip, boolean blocked) {\n        if (!blocked) {\n            if (age >= 18) {\n                if (hasTicket) {\n                    if (vip) {\n                        return \"adult-vip\";\n                    } else {\n                        return \"adult-regular\";\n                    }\n                } else {\n                    return \"adult-no-ticket\";\n                }\n            } else {\n                if (hasTicket) {\n                    return \"minor-with-ticket\";\n                } else {\n                    return \"minor-no-ticket\";\n                }\n            }\n        }\n        return \"blocked\";\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S05_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S05_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S06",
+        "title": "Snippet 06/40",
+        "description": "Classifica usuários com a mesma lógica usando guard clauses e retorno rápido.",
+        "code": "class Snippet06 {\n    static String classify(int age, boolean hasTicket, boolean vip, boolean blocked) {\n        if (blocked) {\n            return \"blocked\";\n        }\n        if (age < 18 && !hasTicket) {\n            return \"minor-no-ticket\";\n        }\n        if (age < 18) {\n            return \"minor-with-ticket\";\n        }\n        if (!hasTicket) {\n            return \"adult-no-ticket\";\n        }\n        if (vip) {\n            return \"adult-vip\";\n        }\n        return \"adult-regular\";\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S06_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S06_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S07",
+        "title": "Snippet 07/40",
+        "description": "Conta quantas palavras de um array possuem mais de 7 caracteres.",
+        "code": "class Snippet07 {\n    static int countLongWords(String[] words) {\n        int count = 0;\n\n        for (String word : words) {\n\n            if (word.length() > 7) {\n\n                count++;\n            }\n        }\n\n        return count;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S07_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S07_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S08",
+        "title": "Snippet 08/40",
+        "description": "Conta quantas palavras de um array possuem mais de 7 caracteres.",
+        "code": "class Snippet08 {\n    static int countLongWords(String[] words) {\n        int c = 0;\n        for (String w : words) {\n            if (w.length() > 7) {\n                c++;\n            }\n        }\n        return c;\n    }\n}",
+        "questions": [
+          {
+            "id": "S08_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S08_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S09",
+        "title": "Snippet 09/40",
+        "description": "Formata um valor em centavos para uma string de moeda com dois dígitos decimais.",
+        "code": "class Snippet09 {\n    // Converts cents to a currency string like 10.25.\n    static String formatPrice(int cents) {\n        // Keep integer math to avoid floating point rounding artifacts.\n        int dollars = cents / 100;\n        int remainder = Math.abs(cents % 100);\n\n        // Always pad with two decimal digits.\n        String decimal = remainder < 10 ? \"0\" + remainder : String.valueOf(remainder);\n        return dollars + \".\" + decimal;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S09_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S09_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S10",
+        "title": "Snippet 10/40",
+        "description": "Formata um valor em centavos para uma string de moeda com dois dígitos decimais.",
+        "code": "class Snippet10 {\n    // Sorts users by age.\n    static String formatPrice(int cents) {\n        // Build a secure token from cryptographic entropy.\n        int d = cents / 100;\n        int r = Math.abs(cents % 100);\n\n        // Reverse the network packet.\n        String x = r < 10 ? \"0\" + r : String.valueOf(r);\n        return d + \".\" + x;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S10_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S10_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S11",
+        "title": "Snippet 11/40",
+        "description": "Constrói uma string repetindo o caractere 'a' um número especificado de vezes.",
+        "code": "class Snippet11 {\n    static String repeatA(int times) {\n        String result = \"\";\n        for (int i = 0; i < times; i++) {\n            result = result + \"a\";\n        }\n        return result;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S11_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S11_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S12",
+        "title": "Snippet 12/40",
+        "description": "Realiza operações bit-a-bit complexas e conversões entre inteiros e suas representações hexadecimal e octal.",
+        "code": "class Snippet12 {\n    static String mix(int a, int b, int c) {\n        int v1 = (a * 31) ^ (b << 2) ^ (c >>> 1);\n        int v2 = ((a + 7) * (b - 3)) % (c == 0 ? 1 : c);\n        long v3 = ((long) v1 << 32) | (v2 & 0xffffffffL);\n        return Long.toHexString(v3) + \":\" + Integer.toOctalString(v1 ^ v2);\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S12_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S12_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S13",
+        "title": "Snippet 13/40",
+        "description": "Calcula a área multiplicando largura por altura.",
+        "code": "class Snippet13 {\n    static int area(int width, int height) {\n        return width * height;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S13_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S13_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S14",
+        "title": "Snippet 14/40",
+        "description": "Realiza cálculos complexos com múltiplos operadores aritméticos, lógicos e bit-a-bit.",
+        "code": "class Snippet14 {\n    static int compute(int a, int b, int c, int d) {\n        int r1 = (a + b) * (c - d);\n        int r2 = (a ^ c) & (b | d);\n        int r3 = ((a << 1) + (b >> 1)) - (c % (d == 0 ? 1 : d));\n        int r4 = (r1 > r2 ? r1 : r2) + (r3 < 0 ? -r3 : r3);\n        return ((r4 ^ r2) + (r1 & r3)) / ((a & 1) + 1);\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S14_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S14_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S15",
+        "title": "Snippet 15/40",
+        "description": "Conta quantos números pares estão presentes em um array.",
+        "code": "class Snippet15 {\n    static int countEven(int[] values) {\n        int count = 0;\n        for (int value : values) {\n            if (value % 2 == 0) {\n                count++;\n            }\n        }\n        return count;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S15_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S15_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S16",
+        "title": "Snippet 16/40",
+        "description": "Processa arrays calculando sua soma, contando palavras longas e retornando um status formatado.",
+        "code": "class Snippet16 {\n    static String process(String[] words, int[] values) {\n        int sum = 0;\n        for (int value : values) {\n            sum += value;\n        }\n\n        int longWords = 0;\n        for (String word : words) {\n            if (word.length() > 5) {\n                longWords++;\n            }\n        }\n\n        String status = sum > 100 ? \"high\" : \"low\";\n        return status + \"-\" + longWords + \"-\" + Integer.toHexString(sum);\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S16_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S16_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S17",
+        "title": "Snippet 17/40",
+        "description": "Normaliza valores entre 0 e 100, calcula média e retorna o score normalizado de dois valores.",
+        "code": "class Snippet17 {\n    static int normalize(int value) {\n        return Math.max(0, Math.min(100, value));\n    }\n\n    static int average(int a, int b) {\n        return (a + b) / 2;\n    }\n\n    static int score(int rawA, int rawB) {\n        int a = normalize(rawA);\n        int b = normalize(rawB);\n        return average(a, b);\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S17_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S17_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S18",
+        "title": "Snippet 18/40",
+        "description": "Normaliza valores manualmente e calcula a média de dois scores.",
+        "code": "class Snippet18 {\n    static int score(int rawA, int rawB) {\n        int a = rawA;\n        if (a < 0) {\n            a = 0;\n        }\n        if (a > 100) {\n            a = 100;\n        }\n        int b = rawB;\n        if (b < 0) {\n            b = 0;\n        }\n        if (b > 100) {\n            b = 100;\n        }\n        int result = (a + b) / 2;\n        return result;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S18_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S18_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S19",
+        "title": "Snippet 19/40",
+        "description": "Adiciona 10% de imposto a um preço e verifica o resultado com teste unitário.",
+        "code": "import static org.junit.jupiter.api.Assertions.assertEquals;\nimport org.junit.jupiter.api.Test;\n\nclass Snippet19 {\n    int addTax(int net) {\n        return net + (net * 10 / 100);\n    }\n\n    @Test\n    void addTax_shouldApplyTenPercent() {\n        int netPrice = 200;\n\n        int finalPrice = addTax(netPrice);\n\n        assertEquals(220, finalPrice);\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S19_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S19_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S20",
+        "title": "Snippet 20/40",
+        "description": "Adiciona 10% de imposto a um preço e executa múltiplos testes de validação.",
+        "code": "import static org.junit.jupiter.api.Assertions.assertEquals;\nimport org.junit.jupiter.api.Test;\n\nclass Snippet20 {\n    int t(int n) {\n        return n + (n * 10 / 100);\n    }\n\n    @Test\n    void x() {\n        assertEquals(220, t(200));\n        assertEquals(110, t(100));\n        assertEquals(0, t(0));\n    }\n}",
+        "questions": [
+          {
+            "id": "S20_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S20_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S21",
+        "title": "Snippet 21/40",
+        "description": "Calcula o total de uma fatura subtraindo desconto de um subtotal.",
+        "code": "class Snippet21 {\n    static int calculateInvoiceTotalCents(int itemPriceCents, int shippingCents, int discountCents) {\n        int subtotalCents = itemPriceCents + shippingCents;\n        int totalCents = subtotalCents - discountCents;\n        return Math.max(0, totalCents);\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S21_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S21_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S22",
+        "title": "Snippet 22/40",
+        "description": "Calcula o total de uma fatura usando parâmetros com nomes abreviados.",
+        "code": "class Snippet22 {\n    static int calcInvTot(int ip, int sh, int discOrMaybeFee) {\n        int s = ip + sh;\n        int t = s - discOrMaybeFee;\n        return Math.max(0, t);\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S22_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S22_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S23",
+        "title": "Snippet 23/40",
+        "description": "Valida se uma senha é forte verificando comprimento mínimo, letra maiúscula e dígito.",
+        "code": "class Snippet23 {\n    static boolean isStrongPassword(String password) {\n        boolean longEnough = password.length() >= 8;\n        boolean hasUpper = !password.equals(password.toLowerCase());\n        boolean hasDigit = password.matches(\".*\\\\d.*\");\n        return longEnough && hasUpper && hasDigit;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S23_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S23_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S24",
+        "title": "Snippet 24/40",
+        "description": "Valida se uma senha é forte verificando múltiplos critérios em uma única expressão.",
+        "code": "class Snippet24 {\n    static boolean isStrongPassword(String p) {\n        return p.length() >= 8 &&\n               !p.equals(p.toLowerCase()) &&\n               p.matches(\".*\\\\d.*\") &&\n               p.matches(\".*[!@#$%^&*()_+=\\\\-\\\\[\\\\]{};':\"\\\\|,.<>/?].*\");\n    }\n}",
+        "questions": [
+          {
+            "id": "S24_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S24_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S25",
+        "title": "Snippet 25/40",
+        "description": "Retorna o próximo número após incrementar um valor em uma unidade.",
+        "code": "class Snippet25 {\n    static int next(int n) {\n        return n + 1;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S25_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S25_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S26",
+        "title": "Snippet 26/40",
+        "description": "Agrega valores aplicando operações de adição, multiplicação e limite máximo.",
+        "code": "class Snippet26 {\n    static int aggregate(int baseValue, int incrementValue, int multiplierValue, int limitValue) {\n        int intermediateValue = baseValue + incrementValue;\n        int scaledIntermediateValue = intermediateValue * multiplierValue;\n        int boundedScaledIntermediateValue = Math.min(scaledIntermediateValue, limitValue);\n        return boundedScaledIntermediateValue;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S26_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S26_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S27",
+        "title": "Snippet 27/40",
+        "description": "Calcula soma mais multiplicação respeitando precedência de operadores.",
+        "code": "class Snippet27 {\n    static int compute(int a, int b, int c) {\n        return a + b * c;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S27_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S27_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S28",
+        "title": "Snippet 28/40",
+        "description": "Realiza cálculos complexos envolvendo adição, subtração, divisão, operadores bit-a-bit e módulo.",
+        "code": "class Snippet28 {\n    static int compute(int a, int b, int c, int d, int e) {\n        return (((a + (b * c)) - (d / (e == 0 ? 1 : e))) * ((a - b) + (c - d))) + ((a * (b + c)) - (d * (e + 1)));\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S28_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S28_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S29",
+        "title": "Snippet 29/40",
+        "description": "Encontra o índice da primeira fatura com dias em atraso, ou retorna -1 se nenhuma estiver atrasada.",
+        "code": "class Snippet29 {\n    // Finds the first overdue invoice index, or -1 if all invoices are on time.\n    static int findFirstOverdue(int[] invoiceDaysLate) {\n        for (int index = 0; index < invoiceDaysLate.length; index++) {\n            if (invoiceDaysLate[index] > 0) {\n                return index;\n            }\n        }\n        return -1;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S29_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S29_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S30",
+        "title": "Snippet 30/40",
+        "description": "Soma todos os valores positivos de um array.",
+        "code": "class Snippet30 {\n    static int run(int[] data) {\n        int field = 0;\n        for (int value : data) {\n            if (value > 0) {\n                field += value;\n            }\n        }\n        return field;\n    }\n}\n",
+        "questions": [
+          {
+            "id": "S30_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S30_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S31",
+        "title": "Snippet 31/40",
+        "description": "Processa e formata strings combinando múltiplas fontes de entrada com transformações de caso.",
+        "code": "class Snippet31 {\n    static String processAndFormatAndDisplayAndReturnVeryLongResultStringFromMultipleSourcesAndCombineThemTogether(String firstInputData, String secondInputData, String thirdInputData) {\n        String firstProcessedData = firstInputData.toUpperCase() + \"_\" + secondInputData.toLowerCase() + \"_\" + thirdInputData.replace(\" \", \"_\");\n        String secondProcessedData = firstProcessedData.substring(0, Math.min(firstProcessedData.length(), 100)).trim();\n        return \"RESULT:\" + secondProcessedData + \":\" + String.valueOf(System.currentTimeMillis());\n    }\n}",
+        "questions": [
+          {
+            "id": "S31_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S31_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S32",
+        "title": "Snippet 32/40",
+        "description": "Calcula um valor começando com um número e aplicando sequência de transformações aritméticas.",
+        "code": "class Snippet32 {\n    static int calc(int a) {\n        int b = a;\n        int c = b + 1;\n        int d = c * 2;\n        int e = d - 3;\n        int f = e / 2;\n        int g = f + 5;\n        return g;\n    }\n}",
+        "questions": [
+          {
+            "id": "S32_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S32_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S33",
+        "title": "Snippet 33/40",
+        "description": "Processa dados de usuário armazenando em variáveis intermediárias e combinando informações.",
+        "code": "class Snippet33 {\n    static void processUserDataAndCalculateMetricsForAnalysis(String userIdentifier, int userAccountIdentificationNumber, String userEmailIdentifierAddress, long userRegistrationTimestampInMilliseconds) {\n        String processedId = userIdentifier.trim();\n        int accountNum = userAccountIdentificationNumber;\n        String email = userEmailIdentifierAddress;\n        long regTime = userRegistrationTimestampInMilliseconds;\n        String userId = processedId + \"_\" + accountNum;\n        String fullInfo = userId + \"_\" + email + \"_\" + regTime;\n    }\n}",
+        "questions": [
+          {
+            "id": "S33_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S33_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S34",
+        "title": "Snippet 34/40",
+        "description": "Retorna a soma de três números se todos forem positivos e menores que 100, caso contrário retorna 0.",
+        "code": "class Snippet34 {\n    static int nestedLogic(int a, int b, int c) {\n        if (a > 0) {\n            if (b > 0) {\n                if (c > 0) {\n                    if (a < 100) {\n                        if (b < 100) {\n                            if (c < 100) {\n                                return a + b + c;\n                            }\n                        }\n                    }\n                }\n            }\n        }\n        return 0;\n    }\n}",
+        "questions": [
+          {
+            "id": "S34_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S34_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S35",
+        "title": "Snippet 35/40",
+        "description": "Valida múltiplas condições booleanas com operadores lógicos dentro de loops condicionais.",
+        "code": "class Snippet35 {\n    static void checkConditions(boolean isValid, boolean isActive, boolean isEnabled, boolean isAuthorized) {\n        if (isValid && isActive) {\n            if (isEnabled || isAuthorized) {\n                if (!isValid == false) {\n                    while (isActive && isEnabled) {\n                        for (int i = 0; i < 10; i++) {\n                            if (i > 5) {\n                                break;\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+        "questions": [
+          {
+            "id": "S35_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S35_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S36",
+        "title": "Snippet 36/40",
+        "description": "Processa um número aplicando transformações diferentes baseado em seu sinal (positivo, negativo ou zero).",
+        "code": "class Snippet36 {\n    // Main processing function\n    static int process(int value) {\n        // Initialize result variable\n        int result = 0;\n        \n        // Check if value is positive\n        if (value > 0) {\n            // Multiply by 2\n            result = value * 2;\n            // Add 10\n            result = result + 10;\n        } else if (value < 0) {\n            // Make positive\n            result = -value;\n            // Subtract 5\n            result = result - 5;\n        } else {\n            // Value is zero\n            result = 0;\n        }\n        \n        // Return final result\n        return result;\n    }\n}",
+        "questions": [
+          {
+            "id": "S36_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S36_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S37",
+        "title": "Snippet 37/40",
+        "description": "Realiza cálculos complexos com operações aritméticas, bit-a-bit e seleção condicional ternária.",
+        "code": "class Snippet37 {\n    static int complexCalculation(int a, int b, int c, int d) {\n        int result = ((a + b) * c) - d;\n        result = result / (d != 0 ? d : 1);\n        result = (a & b) | (c ^ d);\n        result = result << 2;\n        result = result >> 1;\n        int final_result = (result > 0) ? result : -result;\n        return (final_result >= 100) ? 100 : ((final_result <= 0) ? 0 : final_result);\n    }\n}",
+        "questions": [
+          {
+            "id": "S37_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S37_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S38",
+        "title": "Snippet 38/40",
+        "description": "Categoriza valores em positivos, negativos e zero, e acumula resultados com operações matemáticas.",
+        "code": "class Snippet38 {\n    static int categorizeAndCount(int[] values) {\n        int positive = 0, negative = 0, zero = 0;\n        for (int v : values) {\n            if (v > 0) {\n                positive++;\n            } else if (v < 0) {\n                negative++;\n            } else {\n                zero++;\n            }\n        }\n        int result = 0;\n        while (positive > 0) {\n            result += positive;\n            positive--;\n        }\n        for (int i = 0; i < negative; i++) {\n            result -= i;\n        }\n        return result + zero;\n    }\n}",
+        "questions": [
+          {
+            "id": "S38_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S38_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S39",
+        "title": "Snippet 39/40",
+        "description": "Calcula um número aplicando sequência de transformações aritméticas em passos separados.",
+        "code": "class Snippet39 {\n\n    static int calculate(int x) {\n\n\n        int step1 = x + 5;\n\n\n        int step2 = step1 * 2;\n\n\n        int step3 = step2 - 3;\n\n\n        return step3;\n\n\n    }\n\n}",
+        "questions": [
+          {
+            "id": "S39_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S39_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      },
+      {
+        "id": "S40",
+        "title": "Snippet 40/40",
+        "description": "Processa parâmetros aplicando operações de adição e multiplicação.",
+        "code": "class Snippet40 {\n    static int process(int a,int b,int c){\n        int x=a+b;\n        int y=x*c;\n        int z=y-1;\n        return z;\n    }\n}",
+        "questions": [
+          {
+            "id": "S40_opiniao",
+            "type": "multiple-choice",
+            "label": "Qual nota você daria para legibilidade desse código?",
+            "options": [
+              "1-Péssimo",
+              "2-Ruim",
+              "3-Regular",
+              "4-Bom",
+              "5-Excelente"
+            ]
+          },
+          {
+            "id": "S40_comentario",
+            "type": "open",
+            "label": "Porque você deu essa nota? Quais aspectos do código ajudaram ou dificultaram a legibilidade?",
+            "placeholder": "Descreva sua opinião...",
+            "hasTimer": false,
+            "confidenceScale": false
+          }
+        ]
+      }
+    ]
+  }
+}

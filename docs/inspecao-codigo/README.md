@@ -11,6 +11,8 @@ Esta pasta contem a versao web da atividade para uso no GitHub Pages.
 - oculta o codigo na Pergunta 2 (variavel)
 - na Pergunta 2, a verificacao de variavel considera o codigo inteiro
 - ao final, mostra todos os valores para copiar e preencher no formulario
+- permite marcar formularios como habilitados ou desabilitados no catalogo, com indicacao visual na tela inicial
+- salva progresso parcial no navegador para retomar a atividade depois
 
 ## Execucao local
 

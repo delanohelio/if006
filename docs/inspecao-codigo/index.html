@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>IF006 - Atividades</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/atom-one-dark.min.css">
 </head>
 <body>
   <main class="container">
@@ -14,6 +15,7 @@
     <!-- Tela 1: seleção do formulário -->
     <section id="home-card" class="card">
       <h2>Escolha o formulário</h2>
+      <div id="home-resume" class="hidden"></div>
       <div id="form-list">
         <p class="muted">Carregando formulários…</p>
       </div>
@@ -31,8 +33,9 @@
       <label for="input-email">E-mail</label>
       <input id="input-email" type="email" placeholder="seu@email.com" autocomplete="email">
 
-      <div id="cpf-field">
+      <div id="cpf-field" class="hidden">
         <label for="input-cpf">Último dígito do CPF (0 a 9)</label>
+        <p class="muted cpf-hint">Usado apenas para determinar seu grupo no teste A/B.</p>
         <input id="input-cpf" type="number" min="0" max="9" placeholder="Ex.: 8">
         <p id="group-preview" class="muted">Grupo será definido automaticamente: par = A, ímpar = B.</p>
       </div>
@@ -46,14 +49,15 @@
 
     <!-- Tela 3: questões -->
     <section id="quiz-card" class="card hidden">
+      <p id="progress" class="muted"></p>
       <div class="row">
         <h2 id="question-title"></h2>
         <span id="group-badge" class="badge hidden"></span>
       </div>
-      <p id="progress" class="muted"></p>
+      <p id="page-description" class="muted hidden"></p>
 
       <div id="code-panel" class="hidden">
-        <pre><code id="code-block"></code></pre>
+        <pre><code id="code-block" class="language-java"></code></pre>
       </div>
 
       <div id="question-area"></div>
@@ -93,6 +97,8 @@
     </section>
   </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/java.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

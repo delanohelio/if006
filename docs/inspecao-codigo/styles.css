@@ -165,9 +165,61 @@ button:disabled {
   margin-bottom: 10px;
 }
 
+.form-card.is-disabled {
+  opacity: 0.72;
+  background: #f4eee6;
+}
+
+.form-card.is-disabled button {
+  background: #b7aba0;
+}
+
 .form-card-info p {
   margin: 4px 0 0;
   font-size: 0.9rem;
+}
+
+.form-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.form-card-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.form-card-status.is-disabled {
+  color: #7a4b16;
+}
+
+.form-card-status.is-disabled::before {
+  background: var(--accent-2);
+}
+
+.resume-box {
+  border: 1px solid #d9c7ad;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, #fff4df, #fffaf3);
+}
+
+.resume-box p {
+  margin: 0 0 10px;
+}
+
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .form-card button {
@@ -194,16 +246,23 @@ button:disabled {
 /* ---- Código ---- */
 pre {
   overflow-x: auto;
-  background: #1d1f21;
-  color: #f6f7f8;
   border-radius: 10px;
-  padding: 14px;
+  margin: 0;
+}
+
+pre code.hljs {
+  border-radius: 10px;
   font-family: "JetBrains Mono", "Fira Code", monospace;
   font-size: 0.9rem;
 }
 
 .timer {
   margin: 8px 0;
+}
+
+.cpf-hint {
+  margin: 2px 0 6px;
+  font-size: 0.85rem;
 }
 
 /* ---- Tabela de resultados ---- */

@@ -9,13 +9,22 @@ const FORM_CATALOG = [
     id: "inspecao-codigo-s1",
     title: "Inspeção de Código — Semana 1",
     description: "Rastreio de código Java. Responda sem executar. Teste A/B habilitado.",
+    enabled: false,
     file: "forms/inspecao-codigo-s1.json"
   },
   {
     id: "inspecao-codigo-s2",
     title: "Inspeção de Código — Semana 2",
     description: "Compare alternativas de código e indique qual parece mais adequada para produção.",
+    enabled: false,
     file: "forms/inspecao-codigo-s2.json"
+  },
+  {
+    id: "analise-1",
+    title: "Análise de Código - 09/04/2026",
+    description: "Avalie o código e dê uma nota de legibilidade entre 1 e 5 para o código.",
+    enabled: true,
+    file: "forms/analise-1.json"
   }
   // Exemplo de como adicionar um segundo form:
   // {
@@ -29,17 +38,24 @@ const FORM_CATALOG = [
 // ============================================================
 // Estado global
 // ============================================================
+const STORAGE_KEY = "if006.inspecao-codigo.progress";
+const STORAGE_VERSION = 1;
+
 const state = {
+  currentView: "home",
+  formMeta: null,
   form: null,           // JSON carregado do arquivo do formulário
   group: null,          // "A", "B" ou "default"
   pages: [],            // pages do grupo selecionado
   pageIndex: 0,
   questionIndex: 0,
   userData: { nome: "", email: "", cpfFinal: null },
+  registrationDraft: { nome: "", email: "", cpfInput: "" },
   startedAt: null,
   timerInterval: null,
   timerStartMs: null,
-  answers: []
+  answers: [],
+  draftAnswer: { questionId: null, value: "", confidence: "" }
   // Cada resposta: { pageId, pageTitle, questionId, label, questionType, value, timeSec, confidence }
 };
 
@@ -51,11 +67,11 @@ const el = {};
 function initEls() {
   [
     "home-card", "register-card", "quiz-card", "result-card",
-    "form-list", "home-error",
+    "form-list", "home-error", "home-resume",
     "register-title", "register-desc",
     "input-nome", "input-email", "cpf-field", "input-cpf", "group-preview",
     "register-btn", "register-back-btn", "register-error",
-    "question-title", "group-badge", "progress",
+    "question-title", "group-badge", "progress", "page-description",
     "code-panel", "code-block", "question-area", "quiz-error",
     "result-headline", "result-table-body", "result-text",
     "copy-result-btn", "submit-sheets-btn", "restart-btn",
@@ -73,6 +89,7 @@ function showView(name) {
     document.getElementById(id).classList.add("hidden");
   });
   document.getElementById(name + "-card").classList.remove("hidden");
+  state.currentView = name;
 }
 
 function escapeHtml(value) {
@@ -88,12 +105,271 @@ function truncate(str, n) {
   return str.length > n ? str.slice(0, n - 1) + "…" : str;
 }
 
+function isFormEnabled(meta) {
+  return meta.enabled !== false;
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(value, max));
+}
+
+function formatSavedAt(value) {
+  if (!value) return "agora";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "recentemente";
+  return date.toLocaleString("pt-BR");
+}
+
+function buildDraftAnswerForCurrentQuestion() {
+  if (state.currentView !== "quiz" || !state.form || state.pageIndex >= state.pages.length) {
+    return state.draftAnswer;
+  }
+
+  const question = currentQuestion();
+  if (!question || question.type !== "open") {
+    return { questionId: null, value: "", confidence: "" };
+  }
+
+  const input = document.getElementById("open-answer");
+  const confidence = document.getElementById("confidence-select");
+  return {
+    questionId: question.id,
+    value: input ? input.value : state.draftAnswer.value,
+    confidence: confidence ? confidence.value : state.draftAnswer.confidence
+  };
+}
+
+function syncRegisterDraftFromDom() {
+  if (state.currentView !== "register") return;
+  state.registrationDraft = {
+    nome: el.inputNome.value,
+    email: el.inputEmail.value,
+    cpfInput: el.inputCpf.value
+  };
+}
+
+function buildProgressSnapshot() {
+  syncRegisterDraftFromDom();
+  state.draftAnswer = buildDraftAnswerForCurrentQuestion();
+
+  return {
+    version: STORAGE_VERSION,
+    savedAt: new Date().toISOString(),
+    view: state.currentView,
+    formId: state.formMeta ? state.formMeta.id : null,
+    group: state.group,
+    pageIndex: state.pageIndex,
+    questionIndex: state.questionIndex,
+    userData: state.userData,
+    registrationDraft: state.registrationDraft,
+    startedAt: state.startedAt ? state.startedAt.toISOString() : null,
+    answers: state.answers,
+    draftAnswer: state.draftAnswer
+  };
+}
+
+function saveProgress() {
+  if (!state.formMeta) return;
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(buildProgressSnapshot()));
+  } catch {
+    // Se o localStorage estiver indisponível, o fluxo segue sem persistência.
+  }
+}
+
+function loadSavedProgress() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw);
+    if (!parsed || parsed.version !== STORAGE_VERSION || !parsed.formId) {
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function clearSavedProgress() {
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Nada a fazer.
+  }
+}
+
+function resetState() {
+  stopTimer();
+  Object.assign(state, {
+    currentView: "home",
+    formMeta: null,
+    form: null,
+    group: null,
+    pages: [],
+    pageIndex: 0,
+    questionIndex: 0,
+    userData: { nome: "", email: "", cpfFinal: null },
+    registrationDraft: { nome: "", email: "", cpfInput: "" },
+    startedAt: null,
+    timerStartMs: null,
+    answers: [],
+    draftAnswer: { questionId: null, value: "", confidence: "" }
+  });
+}
+
+async function fetchFormDefinition(meta) {
+  const res = await fetch(meta.file);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+function renderResumeBox() {
+  const saved = loadSavedProgress();
+  if (!saved) {
+    el.homeResume.classList.add("hidden");
+    el.homeResume.innerHTML = "";
+    return;
+  }
+
+  const meta = FORM_CATALOG.find(item => item.id === saved.formId);
+  if (!meta) {
+    clearSavedProgress();
+    el.homeResume.classList.add("hidden");
+    el.homeResume.innerHTML = "";
+    return;
+  }
+
+  const enabled = isFormEnabled(meta);
+  const actionButtons = enabled
+    ? `
+      <div class="resume-actions">
+        <button id="resume-progress-btn" type="button">Continuar de onde parei</button>
+        <button id="discard-progress-btn" type="button" class="btn-secondary">Descartar progresso salvo</button>
+      </div>
+    `
+    : `
+      <div class="resume-actions">
+        <button id="discard-progress-btn" type="button" class="btn-secondary">Remover progresso salvo</button>
+      </div>
+    `;
+
+  el.homeResume.innerHTML = `
+    <div class="resume-box">
+      <p>
+        <strong>Há um progresso salvo</strong><br>
+        Formulário: ${escapeHtml(meta.title)}<br>
+        Último salvamento: ${escapeHtml(formatSavedAt(saved.savedAt))}
+      </p>
+      <p class="muted">${enabled
+        ? "Você pode retomar a atividade no ponto em que saiu."
+        : "O formulário salvo está desabilitado no momento. O progresso continua visível, mas não pode ser retomado."}</p>
+      ${actionButtons}
+    </div>
+  `;
+  el.homeResume.classList.remove("hidden");
+
+  if (enabled) {
+    document.getElementById("resume-progress-btn").addEventListener("click", resumeSavedProgress);
+  }
+  document.getElementById("discard-progress-btn").addEventListener("click", discardSavedProgress);
+}
+
+async function resumeSavedProgress() {
+  el.homeError.textContent = "";
+  const saved = loadSavedProgress();
+  if (!saved) {
+    renderHome();
+    return;
+  }
+
+  const meta = FORM_CATALOG.find(item => item.id === saved.formId);
+  if (!meta || !isFormEnabled(meta)) {
+    renderHome();
+    return;
+  }
+
+  try {
+    const form = await fetchFormDefinition(meta);
+    const registrationDraft = saved.registrationDraft || {};
+    const userData = saved.userData || {};
+    const group = typeof saved.group === "string" ? saved.group : null;
+    const pages = group && form.groups[group] ? form.groups[group] : [];
+
+    state.formMeta = meta;
+    state.form = form;
+    state.group = group;
+    state.pages = pages;
+    state.userData = {
+      nome: userData.nome || "",
+      email: userData.email || "",
+      cpfFinal: userData.cpfFinal ?? null
+    };
+    state.registrationDraft = {
+      nome: registrationDraft.nome ?? state.userData.nome,
+      email: registrationDraft.email ?? state.userData.email,
+      cpfInput: registrationDraft.cpfInput ?? (state.userData.cpfFinal ?? "")
+    };
+    state.startedAt = saved.startedAt ? new Date(saved.startedAt) : null;
+    state.answers = Array.isArray(saved.answers) ? saved.answers : [];
+    state.draftAnswer = saved.draftAnswer || { questionId: null, value: "", confidence: "" };
+
+    if (saved.view === "quiz" && pages.length > 0) {
+      state.pageIndex = clamp(saved.pageIndex || 0, 0, pages.length - 1);
+      const questions = pages[state.pageIndex].questions || [];
+      state.questionIndex = clamp(saved.questionIndex || 0, 0, Math.max(questions.length - 1, 0));
+      showView("quiz");
+      renderCurrentQuestion();
+      return;
+    }
+
+    if (saved.view === "result" && state.answers.length > 0) {
+      state.pageIndex = pages.length > 0 ? pages.length - 1 : 0;
+      state.questionIndex = 0;
+      showResults();
+      return;
+    }
+
+    state.pageIndex = 0;
+    state.questionIndex = 0;
+    showRegister();
+  } catch {
+    el.homeError.textContent =
+      "Não foi possível restaurar o progresso salvo. Verifique se o arquivo do formulário continua disponível.";
+  }
+}
+
+function discardSavedProgress() {
+  clearSavedProgress();
+  resetState();
+  renderHome();
+}
+
+function prepareFormState(meta, form) {
+  stopTimer();
+  state.formMeta = meta;
+  state.form = form;
+  state.group = null;
+  state.pages = [];
+  state.pageIndex = 0;
+  state.questionIndex = 0;
+  state.userData = { nome: "", email: "", cpfFinal: null };
+  state.registrationDraft = { nome: "", email: "", cpfInput: "" };
+  state.startedAt = null;
+  state.answers = [];
+  state.draftAnswer = { questionId: null, value: "", confidence: "" };
+  state.timerStartMs = null;
+}
+
 // ============================================================
 // Tela 1 — Seleção do formulário
 // ============================================================
 function renderHome() {
   el.homeError.textContent = "";
   el.formList.innerHTML = "";
+  renderResumeBox();
 
   if (FORM_CATALOG.length === 0) {
     el.formList.innerHTML = '<p class="muted">Nenhum formulário disponível.</p>';
@@ -102,16 +378,20 @@ function renderHome() {
   }
 
   FORM_CATALOG.forEach(meta => {
+    const enabled = isFormEnabled(meta);
     const div = document.createElement("div");
-    div.className = "form-card";
+    div.className = `form-card${enabled ? "" : " is-disabled"}`;
     div.innerHTML = `
       <div class="form-card-info">
         <strong>${escapeHtml(meta.title)}</strong>
         <p class="muted">${escapeHtml(meta.description)}</p>
+        <div class="form-card-status${enabled ? "" : " is-disabled"}">${enabled ? "Disponível" : (meta.disabledLabel || "Desabilitado")}</div>
       </div>
-      <button type="button">Responder</button>
+      <button type="button" ${enabled ? "" : "disabled aria-disabled=\"true\""}>${enabled ? "Responder" : "Indisponível"}</button>
     `;
-    div.querySelector("button").addEventListener("click", () => selectForm(meta));
+    if (enabled) {
+      div.querySelector("button").addEventListener("click", () => selectForm(meta));
+    }
     el.formList.appendChild(div);
   });
 
@@ -119,11 +399,11 @@ function renderHome() {
 }
 
 async function selectForm(meta) {
+  if (!isFormEnabled(meta)) return;
   el.homeError.textContent = "";
   try {
-    const res = await fetch(meta.file);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    state.form = await res.json();
+    const form = await fetchFormDefinition(meta);
+    prepareFormState(meta, form);
     showRegister();
   } catch {
     el.homeError.textContent =
@@ -138,10 +418,9 @@ function showRegister() {
   const form = state.form;
   el.registerTitle.textContent = form.title;
   el.registerDesc.textContent = form.description || "";
-  el.inputNome.value = "";
-  el.inputEmail.value = "";
-  el.inputCpf.value = "";
-  el.groupPreview.textContent = "Grupo será definido automaticamente: par = A, ímpar = B.";
+  el.inputNome.value = state.registrationDraft.nome || state.userData.nome || "";
+  el.inputEmail.value = state.registrationDraft.email || state.userData.email || "";
+  el.inputCpf.value = state.registrationDraft.cpfInput || "";
   el.registerError.textContent = "";
 
   if (form.hasAbTest) {
@@ -150,7 +429,9 @@ function showRegister() {
     el.cpfField.classList.add("hidden");
   }
 
+  updateGroupPreview();
   showView("register");
+  saveProgress();
 }
 
 function updateGroupPreview() {
@@ -197,15 +478,18 @@ function validateAndStartQuiz() {
   }
 
   state.userData   = { nome, email, cpfFinal };
+  state.registrationDraft = { nome, email, cpfInput: el.inputCpf.value.trim() };
   state.group      = group;
   state.pages      = form.groups[group];
   state.pageIndex  = 0;
   state.questionIndex = 0;
   state.answers    = [];
   state.startedAt  = new Date();
+  state.draftAnswer = { questionId: null, value: "", confidence: "" };
 
   el.registerError.textContent = "";
   showView("quiz");
+  saveProgress();
   renderCurrentQuestion();
 }
 
@@ -226,9 +510,19 @@ function renderCurrentQuestion() {
   el.questionTitle.textContent = page.title;
   el.progress.textContent      = `Página ${state.pageIndex + 1} de ${total}`;
 
+  // Descrição da página (opcional)
+  if (page.description) {
+    el.pageDescription.textContent = page.description;
+    el.pageDescription.classList.remove("hidden");
+  } else {
+    el.pageDescription.classList.add("hidden");
+  }
+
   // Código (opcional)
   if (page.code) {
     el.codeBlock.textContent = page.code;
+    el.codeBlock.removeAttribute("data-highlighted");
+    hljs.highlightElement(el.codeBlock);
     el.codePanel.classList.remove("hidden");
   } else {
     el.codePanel.classList.add("hidden");
@@ -249,6 +543,8 @@ function renderCurrentQuestion() {
   } else if (question.type === "multiple-choice") {
     renderMultipleChoiceQuestion(question);
   }
+
+  saveProgress();
 }
 
 function renderOpenQuestion(q) {
@@ -273,6 +569,17 @@ function renderOpenQuestion(q) {
   input.type        = "text";
   input.id          = "open-answer";
   input.placeholder = q.placeholder || "Digite sua resposta";
+  if (state.draftAnswer.questionId === q.id) {
+    input.value = state.draftAnswer.value || "";
+  }
+  input.addEventListener("input", () => {
+    state.draftAnswer = {
+      questionId: q.id,
+      value: input.value,
+      confidence: state.draftAnswer.questionId === q.id ? state.draftAnswer.confidence : ""
+    };
+    saveProgress();
+  });
   wrapper.appendChild(input);
 
   if (hasConfidence) {
@@ -291,6 +598,17 @@ function renderOpenQuestion(q) {
       <option value="4">4 – Boa confiança</option>
       <option value="5">5 – Certeza</option>
     `;
+    if (state.draftAnswer.questionId === q.id && state.draftAnswer.confidence) {
+      select.value = state.draftAnswer.confidence;
+    }
+    select.addEventListener("change", () => {
+      state.draftAnswer = {
+        questionId: q.id,
+        value: input.value,
+        confidence: select.value
+      };
+      saveProgress();
+    });
     wrapper.appendChild(select);
   }
 
@@ -358,12 +676,14 @@ function confirmOpenAnswer(q, hasTimer, hasConfidence) {
   }
 
   recordAnswer(q, value, timeSec, confidence);
+  state.draftAnswer = { questionId: null, value: "", confidence: "" };
   el.quizError.textContent = "";
   advanceQuiz();
 }
 
 function confirmMultipleChoice(q, value) {
   recordAnswer(q, value, null, null);
+  state.draftAnswer = { questionId: null, value: "", confidence: "" };
   el.quizError.textContent = "";
   advanceQuiz();
 }
@@ -392,6 +712,7 @@ function advanceQuiz() {
     showResults();
     return;
   }
+  saveProgress();
   renderCurrentQuestion();
 }
 
@@ -442,6 +763,7 @@ function showResults() {
 
   el.resultText.value = buildResultText();
   showView("result");
+  saveProgress();
 }
 
 function buildResultText() {
@@ -532,13 +854,23 @@ async function submitToSheets() {
 // Reiniciar
 // ============================================================
 function restartQuiz() {
-  stopTimer();
-  Object.assign(state, {
-    form: null, group: null, pages: [],
-    pageIndex: 0, questionIndex: 0,
-    userData: { nome: "", email: "", cpfFinal: null },
-    startedAt: null, timerStartMs: null, answers: []
-  });
+  clearSavedProgress();
+  resetState();
+  renderHome();
+}
+
+function handleRegisterInputChange() {
+  state.registrationDraft = {
+    nome: el.inputNome.value,
+    email: el.inputEmail.value,
+    cpfInput: el.inputCpf.value
+  };
+  saveProgress();
+}
+
+function goBackHomeFromRegister() {
+  clearSavedProgress();
+  resetState();
   renderHome();
 }
 
@@ -548,12 +880,18 @@ function restartQuiz() {
 document.addEventListener("DOMContentLoaded", () => {
   initEls();
 
-  el.registerBackBtn.addEventListener("click",  renderHome);
-  el.inputCpf.addEventListener("input",         updateGroupPreview);
+  el.registerBackBtn.addEventListener("click",  goBackHomeFromRegister);
+  el.inputNome.addEventListener("input",        handleRegisterInputChange);
+  el.inputEmail.addEventListener("input",       handleRegisterInputChange);
+  el.inputCpf.addEventListener("input",         () => {
+    updateGroupPreview();
+    handleRegisterInputChange();
+  });
   el.registerBtn.addEventListener("click",      validateAndStartQuiz);
   el.copyResultBtn.addEventListener("click",    copyResult);
   el.submitSheetsBtn.addEventListener("click",  submitToSheets);
   el.restartBtn.addEventListener("click",       restartQuiz);
+  window.addEventListener("beforeunload",       saveProgress);
 
   renderHome();
 });
