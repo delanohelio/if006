@@ -24,6 +24,7 @@ const FORM_CATALOG = [
     title: "Análise de Código - 09/04/2026",
     description: "Avalie o código e dê uma nota de legibilidade entre 1 e 5 para o código.",
     enabled: true,
+    resultsEnabled: true,
     file: "forms/analise-1.json"
   }
   // Exemplo de como adicionar um segundo form:
@@ -75,7 +76,14 @@ function initEls() {
     "code-panel", "code-block", "question-area", "quiz-error",
     "result-headline", "result-table-body", "result-text",
     "copy-result-btn", "submit-sheets-btn", "restart-btn",
-    "copy-feedback", "submit-feedback"
+    "copy-feedback", "submit-feedback",
+    "dashboard-card", "dashboard-title", "dashboard-meta",
+    "dashboard-loading", "dashboard-error", "dashboard-charts",
+    "dashboard-back-btn", "dashboard-nav", "dashboard-page-select",
+    "dashboard-page-counter", "dashboard-prev-btn", "dashboard-next-btn",
+    "dashboard-page-detail", "dashboard-page-title", "dashboard-page-description",
+    "dashboard-page-code-panel", "dashboard-page-code",
+    "dashboard-bar-slot", "dashboard-box-slot", "dashboard-word-slot"
   ].forEach(id => {
     el[id.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = document.getElementById(id);
   });
@@ -85,7 +93,7 @@ function initEls() {
 // Utilitários
 // ============================================================
 function showView(name) {
-  ["home-card", "register-card", "quiz-card", "result-card"].forEach(id => {
+  ["home-card", "register-card", "quiz-card", "result-card", "dashboard-card"].forEach(id => {
     document.getElementById(id).classList.add("hidden");
   });
   document.getElementById(name + "-card").classList.remove("hidden");
@@ -378,7 +386,8 @@ function renderHome() {
   }
 
   FORM_CATALOG.forEach(meta => {
-    const enabled = isFormEnabled(meta);
+    const enabled    = isFormEnabled(meta);
+    const hasResults = meta.resultsEnabled === true;
     const div = document.createElement("div");
     div.className = `form-card${enabled ? "" : " is-disabled"}`;
     div.innerHTML = `
@@ -387,10 +396,16 @@ function renderHome() {
         <p class="muted">${escapeHtml(meta.description)}</p>
         <div class="form-card-status${enabled ? "" : " is-disabled"}">${enabled ? "Disponível" : (meta.disabledLabel || "Desabilitado")}</div>
       </div>
-      <button type="button" ${enabled ? "" : "disabled aria-disabled=\"true\""}>${enabled ? "Responder" : "Indisponível"}</button>
+      <div class="form-card-actions">
+        <button type="button" class="btn-respond" ${enabled ? "" : "disabled aria-disabled=\"true\""}>${enabled ? "Responder" : "Indisponível"}</button>
+        ${hasResults ? '<button type="button" class="btn-results btn-secondary">Ver resultados</button>' : ""}
+      </div>
     `;
     if (enabled) {
-      div.querySelector("button").addEventListener("click", () => selectForm(meta));
+      div.querySelector(".btn-respond").addEventListener("click", () => selectForm(meta));
+    }
+    if (hasResults) {
+      div.querySelector(".btn-results").addEventListener("click", () => openDashboard(meta));
     }
     el.formList.appendChild(div);
   });
@@ -851,6 +866,347 @@ async function submitToSheets() {
 }
 
 // ============================================================
+// Dashboard de resultados
+// ============================================================
+
+const dashCharts = [];
+const dashboardState = {
+  pages: [],
+  currentIndex: 0
+};
+
+async function openDashboard(meta) {
+  el.dashboardError.textContent  = "";
+  el.dashboardMeta.textContent   = "";
+  el.dashboardLoading.classList.remove("hidden");
+  el.dashboardNav.classList.add("hidden");
+  el.dashboardPageDetail.classList.add("hidden");
+  el.dashboardCharts.classList.add("hidden");
+  el.dashboardTitle.textContent  = meta.title;
+  showView("dashboard");
+
+  try {
+    const form   = await fetchFormDefinition(meta);
+    const apiUrl = form.sheetsApiUrl;
+
+    if (!apiUrl) {
+      el.dashboardError.textContent = "URL da planilha não configurada neste formulário.";
+      el.dashboardLoading.classList.add("hidden");
+      return;
+    }
+
+    const dataUrl = `${apiUrl}?action=data&formId=${encodeURIComponent(form.id)}`;
+    const res     = await fetch(dataUrl);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const payload = await res.json();
+
+    if (payload.status !== "ok") {
+      throw new Error(payload.message || "Resposta inesperada do servidor.");
+    }
+
+    dashboardState.pages = buildDashboardPagesFromFormAndResponses(form, payload.questions || []);
+    dashboardState.currentIndex = 0;
+
+    el.dashboardMeta.textContent = `${payload.totalResponses} resposta(s) coletada(s)`;
+    el.dashboardLoading.classList.add("hidden");
+
+    if (dashboardState.pages.length === 0) {
+      el.dashboardError.textContent = "Sem páginas disponíveis para visualização.";
+      return;
+    }
+
+    renderDashboardPageOptions();
+    renderDashboardCurrentPage();
+
+    el.dashboardNav.classList.remove("hidden");
+    el.dashboardPageDetail.classList.remove("hidden");
+    el.dashboardCharts.classList.remove("hidden");
+  } catch (err) {
+    el.dashboardLoading.classList.add("hidden");
+    el.dashboardError.textContent = `Não foi possível carregar os dados: ${err.message}`;
+  }
+}
+
+function renderDashboardPageOptions() {
+  el.dashboardPageSelect.innerHTML = "";
+
+  dashboardState.pages.forEach((page, idx) => {
+    const opt = document.createElement("option");
+    opt.value = String(idx);
+    opt.textContent = `${page.pageId} — ${page.title || "Sem título"}`;
+    el.dashboardPageSelect.appendChild(opt);
+  });
+}
+
+function renderDashboardCurrentPage() {
+  const page = dashboardState.pages[dashboardState.currentIndex];
+  if (!page) return;
+
+  el.dashboardPageSelect.value = String(dashboardState.currentIndex);
+  el.dashboardPageCounter.textContent =
+    `${dashboardState.currentIndex + 1} de ${dashboardState.pages.length}`;
+  el.dashboardPrevBtn.disabled = dashboardState.currentIndex === 0;
+  el.dashboardNextBtn.disabled = dashboardState.currentIndex === dashboardState.pages.length - 1;
+
+  el.dashboardPageTitle.textContent = `Página ${page.pageId} — ${page.title || "Sem título"}`;
+  el.dashboardPageDescription.textContent = page.description || "Sem descrição.";
+
+  if (page.code) {
+    el.dashboardPageCodePanel.classList.remove("hidden");
+    el.dashboardPageCode.textContent = page.code;
+    el.dashboardPageCode.removeAttribute("data-highlighted");
+    hljs.highlightElement(el.dashboardPageCode);
+  } else {
+    el.dashboardPageCodePanel.classList.add("hidden");
+    el.dashboardPageCode.textContent = "";
+  }
+
+  destroyDashCharts();
+  renderBarChartForPage(page, el.dashboardBarSlot);
+  renderBoxPlotForPage(page, el.dashboardBoxSlot);
+  renderWordCloudForPage(page, el.dashboardWordSlot);
+}
+
+function changeDashboardPage(delta) {
+  if (dashboardState.pages.length === 0) return;
+  const next = clamp(dashboardState.currentIndex + delta, 0, dashboardState.pages.length - 1);
+  if (next === dashboardState.currentIndex) return;
+  dashboardState.currentIndex = next;
+  renderDashboardCurrentPage();
+}
+
+function onDashboardSelectChange() {
+  const idx = Number(el.dashboardPageSelect.value);
+  if (!Number.isInteger(idx)) return;
+  dashboardState.currentIndex = clamp(idx, 0, Math.max(dashboardState.pages.length - 1, 0));
+  renderDashboardCurrentPage();
+}
+
+function buildDashboardPagesFromFormAndResponses(form, questions) {
+  const respByPage = new Map();
+
+  questions.forEach(q => {
+    const qId = String(q.questionId || "");
+    const match = qId.match(/^([^_]+)_(.+)$/);
+    if (!match) return;
+
+    const pageId = match[1];
+    const kind = match[2];
+
+    if (!respByPage.has(pageId)) {
+      respByPage.set(pageId, { opiniao: [], comentario: [] });
+    }
+
+    const entry = respByPage.get(pageId);
+    if (kind === "opiniao") entry.opiniao = Array.isArray(q.responses) ? q.responses : [];
+    if (kind === "comentario") entry.comentario = Array.isArray(q.responses) ? q.responses : [];
+  });
+
+  const pages = [];
+  const seen = new Set();
+
+  Object.values(form.groups || {}).forEach(groupPages => {
+    (groupPages || []).forEach(page => {
+      if (!page || !page.id || seen.has(page.id)) return;
+      seen.add(page.id);
+      const responses = respByPage.get(page.id) || { opiniao: [], comentario: [] };
+      pages.push({
+        pageId: page.id,
+        title: page.title || "",
+        description: page.description || "",
+        code: page.code || "",
+        opiniao: responses.opiniao,
+        comentario: responses.comentario
+      });
+    });
+  });
+
+  // Inclui páginas com resposta que não estejam no JSON atual (dados legados).
+  [...respByPage.keys()]
+    .filter(pageId => !seen.has(pageId))
+    .sort((a, b) => a.localeCompare(b, "pt-BR", { numeric: true }))
+    .forEach(pageId => {
+      const responses = respByPage.get(pageId);
+      pages.push({
+        pageId,
+        title: "Página não encontrada no JSON atual",
+        description: "Os dados existem na planilha, mas a definição da página não foi encontrada no formulário atual.",
+        code: "",
+        opiniao: responses.opiniao,
+        comentario: responses.comentario
+      });
+    });
+
+  return pages;
+}
+
+function extractScore(response) {
+  const m = String(response).match(/^(\d+)/);
+  return m ? parseInt(m[1], 10) : NaN;
+}
+
+function renderBarChartForPage(page, slot) {
+  if (!slot) return;
+
+  const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  page.opiniao.forEach(r => {
+    const s = extractScore(r);
+    if (s >= 1 && s <= 5) counts[s]++;
+  });
+
+  const total = counts[1] + counts[2] + counts[3] + counts[4] + counts[5];
+  if (total === 0) {
+    slot.innerHTML = '<p class="muted">Sem notas nesta página.</p>';
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  slot.innerHTML = "";
+  slot.appendChild(canvas);
+  canvas.style.width = "100%";
+  canvas.style.height = "260px";
+
+  const chart = new Chart(canvas, {
+    type: "bar",
+    data: {
+      labels: ["1 — Péssimo", "2 — Ruim", "3 — Regular", "4 — Bom", "5 — Excelente"],
+      datasets: [{
+        label: "Respostas",
+        data:  [counts[1], counts[2], counts[3], counts[4], counts[5]],
+        backgroundColor: ["#ef4444", "#f97316", "#eab308", "#22c55e", "#0f766e"],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales:  { y: { beginAtZero: true, ticks: { precision: 0 } } }
+    }
+  });
+
+  dashCharts.push(chart);
+}
+
+function renderBoxPlotForPage(page, slot) {
+  if (!slot) return;
+
+  const scores = page.opiniao
+    .map(r => extractScore(r))
+    .filter(s => !isNaN(s) && s >= 1 && s <= 5);
+
+  if (scores.length === 0) {
+    slot.innerHTML = '<p class="muted">Sem notas suficientes para box-plot.</p>';
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  slot.innerHTML = "";
+  slot.appendChild(canvas);
+  canvas.style.width = "100%";
+  canvas.style.height = "260px";
+
+  const chart = new Chart(canvas, {
+    type: "boxplot",
+    data: {
+      labels: [page.pageId],
+      datasets: [{
+        label: "Nota",
+        data:  [scores],
+        backgroundColor: "rgba(15,118,110,0.25)",
+        borderColor:     "#0f766e",
+        borderWidth:     1.5,
+        medianColor:     "#b45309"
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales:  { y: { min: 0.5, max: 5.5, ticks: { precision: 0 } } }
+    }
+  });
+
+  dashCharts.push(chart);
+}
+
+const PT_STOPWORDS = new Set([
+  "a","ao","aos","aquela","aquelas","aquele","aqueles","aquilo","as","até",
+  "com","como","da","das","de","dela","delas","dele","deles","depois",
+  "do","dos","e","ela","elas","ele","eles","em","entre",
+  "essa","essas","esse","esses","esta","estas","este","estes","eu",
+  "foi","isso","isto","já","lhe","lhes","mais","mas","me",
+  "mesmo","meu","meus","minha","minhas","muito","na","nas","não","nem",
+  "no","nos","nós","nossa","nossas","nosso","nossos","num","numa",
+  "o","os","ou","para","pela","pelas","pelo","pelos","por",
+  "qual","quando","que","quem","se","sem","ser","seu","seus",
+  "só","sua","suas","também","te","tem","teu","teus",
+  "toda","todas","todo","todos","tu","tua","tuas",
+  "um","uma","umas","uns","você","vocês","à","às","é","são",
+  "ter","bem","pois","aqui","lá","há","vai","vão","pode","pois"
+]);
+
+function buildWordFreq(texts) {
+  const freq = {};
+  texts.forEach(text => {
+    String(text).toLowerCase()
+      .replace(/[^a-záàâãéêíóôõúüç\s]/g, " ")
+      .split(/\s+/)
+      .forEach(word => {
+        if (word.length < 3 || PT_STOPWORDS.has(word)) return;
+        freq[word] = (freq[word] || 0) + 1;
+      });
+  });
+  return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 120);
+}
+
+function renderWordCloudForPage(page, slot) {
+  if (!slot) return;
+
+  const wordList = buildWordFreq(page.comentario || []);
+  if (wordList.length === 0) {
+    slot.innerHTML = '<p class="muted">Sem comentários nesta página.</p>';
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  slot.innerHTML = "";
+  slot.appendChild(canvas);
+
+  const width = Math.max(600, slot.clientWidth || 600);
+  const height = 300;
+  canvas.width = width;
+  canvas.height = height;
+  canvas.style.width = "100%";
+  canvas.style.height = `${height}px`;
+
+  const maxFreq = wordList[0][1];
+  const scaledList = wordList.map(([w, c]) => [w, Math.round(14 + (c / maxFreq) * 44)]);
+
+  WordCloud(canvas, {
+    list:            scaledList,
+    gridSize:        8,
+    weightFactor:    1,
+    fontFamily:      "'IBM Plex Sans', 'Segoe UI', sans-serif",
+    color:           (word) => {
+      const palette = ["#0f766e","#b45309","#1d4ed8","#7c3aed","#b91c1c","#047857"];
+      return palette[Math.abs(word.charCodeAt(0)) % palette.length];
+    },
+    backgroundColor: "transparent",
+    shrinkToFit:     true,
+    rotateRatio:     0.25,
+    minSize:         10
+  });
+}
+
+function destroyDashCharts() {
+  while (dashCharts.length > 0) {
+    const chart = dashCharts.pop();
+    chart.destroy();
+  }
+}
+
+// ============================================================
 // Reiniciar
 // ============================================================
 function restartQuiz() {
@@ -891,6 +1247,10 @@ document.addEventListener("DOMContentLoaded", () => {
   el.copyResultBtn.addEventListener("click",    copyResult);
   el.submitSheetsBtn.addEventListener("click",  submitToSheets);
   el.restartBtn.addEventListener("click",       restartQuiz);
+  el.dashboardBackBtn.addEventListener("click", renderHome);
+  el.dashboardPrevBtn.addEventListener("click", () => changeDashboardPage(-1));
+  el.dashboardNextBtn.addEventListener("click", () => changeDashboardPage(1));
+  el.dashboardPageSelect.addEventListener("change", onDashboardSelectChange);
   window.addEventListener("beforeunload",       saveProgress);
 
   renderHome();

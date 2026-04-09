@@ -27,8 +27,81 @@ var SHEET_NAME = "";
 // ---------------------------------------------------------------------------
 
 function doGet(e) {
+  var params = e && e.parameter ? e.parameter : {};
+
+  if (params.action === "data") {
+    try {
+      return getFormData_(params.formId || "");
+    } catch (err) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "error", message: err.message }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
   return ContentService
     .createTextOutput(JSON.stringify({ status: "ok", message: "API ativa." }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Retorna respostas agregadas por questionId (sem dados pessoais).
+ * Endpoint: GET ?action=data[&formId=xxx]
+ */
+function getFormData_(formId) {
+  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = SHEET_NAME
+    ? (ss.getSheetByName(SHEET_NAME) || ss.getActiveSheet())
+    : ss.getActiveSheet();
+
+  var raw = sheet.getDataRange().getValues();
+  if (raw.length < 2) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "ok", formId: formId, totalResponses: 0, questions: [] }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  var headers = raw[0].map(function(h) { return String(h || ""); });
+  var rows    = raw.slice(1);
+
+  // Filtra por formulário se solicitado
+  var filteredRows = rows;
+  if (formId) {
+    var formIdCol = headers.indexOf("formulario");
+    if (formIdCol >= 0) {
+      filteredRows = rows.filter(function(row) {
+        return String(row[formIdCol] || "").trim() === formId;
+      });
+    }
+  }
+
+  // Agrega respostas por questionId (sem dados pessoais)
+  var questionData = {};
+  filteredRows.forEach(function(row) {
+    headers.forEach(function(h, col) {
+      if (!/^q\d+_id$/.test(h)) return;
+      var qId = String(row[col] || "").trim();
+      if (!qId) return;
+      var respCol = headers.indexOf(h.replace(/_id$/, "_resposta"));
+      if (respCol < 0) return;
+      var val = row[respCol];
+      if (val === null || val === undefined || val === "") return;
+      if (!questionData[qId]) questionData[qId] = [];
+      questionData[qId].push(String(val).trim());
+    });
+  });
+
+  var questions = Object.keys(questionData).sort().map(function(qId) {
+    return { questionId: qId, responses: questionData[qId] };
+  });
+
+  return ContentService
+    .createTextOutput(JSON.stringify({
+      status:         "ok",
+      formId:         formId,
+      totalResponses: filteredRows.length,
+      questions:      questions
+    }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 

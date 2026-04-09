@@ -65,6 +65,56 @@
       <p id="quiz-error" class="error" aria-live="polite"></p>
     </section>
 
+    <!-- Tela 5: dashboard de resultados -->
+    <section id="dashboard-card" class="card hidden">
+      <div class="row dash-header">
+        <h2 id="dashboard-title">Resultados</h2>
+        <button id="dashboard-back-btn" type="button" class="btn-secondary">&#8592; Início</button>
+      </div>
+      <p id="dashboard-meta" class="muted"></p>
+      <p id="dashboard-loading" class="muted">Carregando dados&#8230;</p>
+      <p id="dashboard-error" class="error" aria-live="polite"></p>
+
+      <div id="dashboard-nav" class="dashboard-nav hidden">
+        <div class="dashboard-nav-left">
+          <label for="dashboard-page-select">Página</label>
+          <select id="dashboard-page-select"></select>
+          <span id="dashboard-page-counter" class="muted"></span>
+        </div>
+        <div class="dashboard-nav-actions">
+          <button id="dashboard-prev-btn" type="button" class="btn-secondary">Anterior</button>
+          <button id="dashboard-next-btn" type="button" class="btn-secondary">Próxima</button>
+        </div>
+      </div>
+
+      <section id="dashboard-page-detail" class="dashboard-page-detail hidden">
+        <h3 id="dashboard-page-title"></h3>
+        <p id="dashboard-page-description" class="muted"></p>
+        <div id="dashboard-page-code-panel" class="hidden">
+          <pre><code id="dashboard-page-code" class="language-java"></code></pre>
+        </div>
+      </section>
+
+      <div id="dashboard-charts" class="hidden">
+        <section class="chart-section">
+          <div class="chart-grid">
+            <div class="chart-cell">
+              <h4>Distribuição das notas</h4>
+              <div class="chart-wrap"><div id="dashboard-bar-slot" class="chart-canvas-shell"></div></div>
+            </div>
+            <div class="chart-cell">
+              <h4>Box-plot da página</h4>
+              <div class="chart-wrap"><div id="dashboard-box-slot" class="chart-canvas-shell"></div></div>
+            </div>
+          </div>
+          <div class="chart-cell">
+            <h4>Nuvem de palavras dos comentários</h4>
+            <div class="chart-wrap"><div id="dashboard-word-slot" class="wordcloud-shell"></div></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
     <!-- Tela 4: resultado -->
     <section id="result-card" class="card hidden">
       <h2>Resumo final</h2>
@@ -99,6 +149,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/java.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.4.4/build/index.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
