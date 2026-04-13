@@ -95,6 +95,36 @@
         </div>
       </section>
 
+      <section id="dashboard-overview" class="dashboard-page-detail hidden">
+        <h3>Resumo geral por questão</h3>
+        <p class="muted">Clique no cabeçalho de qualquer coluna para ordenar.</p>
+        <div class="row gap" style="justify-content:flex-start;flex-wrap:wrap;margin-bottom:10px">
+          <button id="dashboard-export-csv-btn" type="button" class="btn-secondary">Exportar CSV da tabela</button>
+          <p id="dashboard-export-feedback" class="muted" style="margin:0"></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><button type="button" class="sort-btn" data-sort-key="questionId">Questão</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="pageId">Página</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="totalResponses">Respostas</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="mappedResponses">Numéricas</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="unmappedResponses">Sem mapeamento</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="mean">Média</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="median">Mediana</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="q1">Q1</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="q3">Q3</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="min">Mínimo</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="max">Máximo</button></th>
+                <th><button type="button" class="sort-btn" data-sort-key="stdDev">Desvio padrão</button></th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-overview-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
       <div id="dashboard-charts" class="hidden">
         <section class="chart-section">
           <div class="chart-grid">
@@ -109,7 +139,21 @@
           </div>
           <div class="chart-cell">
             <h4>Nuvem de palavras dos comentários</h4>
+            <div class="word-filter-controls">
+              <label for="dashboard-word-filter-question">Questão de filtro</label>
+              <select id="dashboard-word-filter-question"></select>
+              <label for="dashboard-word-filter-values">Valores (selecione um ou mais)</label>
+              <select id="dashboard-word-filter-values" multiple size="4"></select>
+              <div class="row gap" style="justify-content:flex-start;flex-wrap:wrap;margin-top:8px">
+                <button id="dashboard-word-filter-clear" type="button" class="btn-secondary">Limpar filtro</button>
+                <p id="dashboard-word-filter-meta" class="muted" style="margin:0"></p>
+              </div>
+            </div>
             <div class="chart-wrap"><div id="dashboard-word-slot" class="wordcloud-shell"></div></div>
+          </div>
+          <div class="chart-cell">
+            <h4>Resumo estatístico das respostas</h4>
+            <div class="chart-wrap"><div id="dashboard-summary-slot"></div></div>
           </div>
         </section>
       </div>
@@ -152,6 +196,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.4.4/build/index.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

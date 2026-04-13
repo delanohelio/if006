@@ -63,6 +63,14 @@ function getFormData_(formId) {
 
   var headers = raw[0].map(function(h) { return String(h || ""); });
   var rows    = raw.slice(1);
+  var qIdColumns = [];
+
+  headers.forEach(function(h, col) {
+    if (!/^q\d+_id$/.test(h)) return;
+    var respCol = headers.indexOf(h.replace(/_id$/, "_resposta"));
+    if (respCol < 0) return;
+    qIdColumns.push({ idCol: col, respCol: respCol });
+  });
 
   // Filtra por formulário se solicitado
   var filteredRows = rows;
@@ -77,18 +85,24 @@ function getFormData_(formId) {
 
   // Agrega respostas por questionId (sem dados pessoais)
   var questionData = {};
+  var submissions = [];
+
   filteredRows.forEach(function(row) {
-    headers.forEach(function(h, col) {
-      if (!/^q\d+_id$/.test(h)) return;
-      var qId = String(row[col] || "").trim();
+    var answers = {};
+
+    qIdColumns.forEach(function(pair) {
+      var qId = String(row[pair.idCol] || "").trim();
       if (!qId) return;
-      var respCol = headers.indexOf(h.replace(/_id$/, "_resposta"));
-      if (respCol < 0) return;
-      var val = row[respCol];
+      var val = row[pair.respCol];
       if (val === null || val === undefined || val === "") return;
+
+      var normalizedVal = String(val).trim();
       if (!questionData[qId]) questionData[qId] = [];
-      questionData[qId].push(String(val).trim());
+      questionData[qId].push(normalizedVal);
+      answers[qId] = normalizedVal;
     });
+
+    submissions.push({ answers: answers });
   });
 
   var questions = Object.keys(questionData).sort().map(function(qId) {
@@ -100,7 +114,8 @@ function getFormData_(formId) {
       status:         "ok",
       formId:         formId,
       totalResponses: filteredRows.length,
-      questions:      questions
+      questions:      questions,
+      submissions:    submissions
     }))
     .setMimeType(ContentService.MimeType.JSON);
 }

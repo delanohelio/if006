@@ -3,7 +3,15 @@
   "title": "Análise de Código - 09/04/2026 (40 snippets com métricas variadas)",
   "description": "Avalie o código e dê uma nota de legibilidade entre 1 e 5 para o código.",
   "hasAbTest": false,
+  "resultsPackageEnabled": true,
   "sheetsApiUrl": "https://script.google.com/macros/s/AKfycbwmiB0Y2TXmnEXxdT4cFmJyh5lXv9gQJS0_WQzlqa5MRGKryeoxeUAY5Pj2HKmogX_G/exec",
+  "numericResponseMap": {
+    "1-pessimo": 1,
+    "2-ruim": 2,
+    "3-regular": 3,
+    "4-bom": 4,
+    "5-excelente": 5
+  },
   "groups": {
     "default": [
       {
