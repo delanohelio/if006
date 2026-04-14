@@ -16,6 +16,10 @@ Concentrar exercicios, guias e exemplos comparativos para que estudantes possam:
 - propor melhorias de design e estrutura
 - discutir boas praticas de codigo limpo e arquitetura
 
+O link para a app que é ultilizada nas atividades práticas é:
+- [Inspeção de Código](https://delanohelio.github.io/if006/inspecao-codigo/)
+- Práticas anteriores: [Prática_1](pratica_20260317), [Prática_2](pratica_20260324).
+
 ## Licenca e uso academico
 
 Este repositorio foi preparado para fins educacionais na disciplina IF006.
