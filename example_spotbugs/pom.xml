@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>br.edu.exemplo</groupId>
+    <artifactId>example-spotbugs</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.3.1</version>
+                <configuration>
+                    <!--
+                        effort: Define o esforço da análise.
+                          - Min: análise rápida, menos detalhada
+                          - Default: equilíbrio entre velocidade e cobertura
+                          - Max: análise mais profunda, pode ser mais lenta
+                    -->
+                    <effort>Max</effort>
+
+                    <!--
+                        threshold: Define o nível mínimo de confiança para reportar um bug.
+                          - Low: reporta todos os warnings, incluindo os de baixa confiança
+                          - Medium: reporta apenas warnings de média e alta confiança
+                          - High: reporta apenas warnings de alta confiança
+                    -->
+                    <threshold>Low</threshold>
+
+                    <!--
+                        excludeFilterFile: Arquivo XML que define quais bugs/classes/métodos
+                        devem ser ignorados pela análise.
+                    -->
+                    <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
+
+                    <!--
+                        failOnError: Se true, a build falha quando o SpotBugs encontra bugs
+                        acima do threshold definido (bugs não cobertos pelo filtro de exclusão).
+                    -->
+                    <failOnError>true</failOnError>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>spotbugs-check</id>
+                        <!--
+                            A goal "check" é executada na fase "verify".
+                            Para rodar: mvn verify
+                            Para rodar apenas o SpotBugs: mvn spotbugs:check
+                            Para abrir a GUI do SpotBugs: mvn spotbugs:gui
+                        -->
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

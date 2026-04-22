@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Arquivo de filtro de EXCLUSÃO do SpotBugs.
+
+    Permite suprimir warnings específicos que a equipe decidiu aceitar ou
+    que são falsos positivos no contexto do projeto.
+
+    Cada bloco <Match> define um critério de exclusão. O SpotBugs ignora
+    qualquer ocorrência que satisfaça os critérios definidos.
+
+    Documentação: https://spotbugs.readthedocs.io/en/latest/filter.html
+-->
+<FindBugsFilter
+    xmlns="https://github.com/spotbugs/filter/3.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://github.com/spotbugs/filter/3.0.0
+        https://raw.githubusercontent.com/spotbugs/spotbugs/3.1.0/spotbugs/etc/findbugsfilter.xsd">
+
+    <!--
+        EXCLUSÃO: RV_RETURN_VALUE_IGNORED_BAD_PRACTICE
+        Classe afetada: ArquivoUtil
+
+        Descrição do bug: O método File.delete() retorna boolean indicando
+        sucesso ou falha, mas o valor de retorno está sendo ignorado.
+
+        Motivo da exclusão: Neste contexto específico, a deleção do arquivo
+        temporário é uma operação de "melhor esforço" (best-effort). A falha
+        não impacta o fluxo principal da aplicação e o arquivo será removido
+        pelo sistema operacional ao encerrar o processo.
+
+        ATENÇÃO: Exclusões devem ser bem justificadas. Suprimir warnings
+        indiscriminadamente derrota o propósito da análise estática.
+    -->
+    <Match>
+        <Class name="br.edu.exemplo.ArquivoUtil"/>
+        <Method name="removerArquivoTemporario"/>
+        <Bug pattern="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"/>
+    </Match>
+
+</FindBugsFilter>
