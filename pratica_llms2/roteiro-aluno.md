@@ -32,6 +32,8 @@ Regras para esta etapa:
 4. Registre no relatório, para cada código-base, qual foi escolhido.
 5. Seu grupo vai enviar duas vezes o formulário de registro, uma para cada código-base escolhido.
 
+Formulário de Registro de Atividade: [Formulário de Registro de Atividade](https://forms.gle/VXrfkngoguS8ASUw9)
+
 ---
 
 ## Regras de Execução (Obrigatórias)
