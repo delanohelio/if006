@@ -131,51 +131,8 @@ O que observar:
 
 ---
 
-## Passo 3: Tabela de Auditoria - Átomos de Confusão Identificados
 
-Marque com **SIM** ou **NÃO** se o átomo estava presente em cada fase.
-
-| Tipo de Átomo | Fase 1 | Fase 2 | Fase 3 | Fase 4 | Observações |
-| --- | --- | --- | --- | --- | --- |
-| Conversão implícita de tipo | [ ] | [ ] | [ ] | [ ] | |
-| Precedência de operador não-óbvia | [ ] | [ ] | [ ] | [ ] | |
-| Pre/pós-incremento em expressão | [ ] | [ ] | [ ] | [ ] | |
-| Ternário aninhado | [ ] | [ ] | [ ] | [ ] | |
-| Variable shadowing | [ ] | [ ] | [ ] | [ ] | |
-| Efeito colateral em condição | [ ] | [ ] | [ ] | [ ] | |
-| Atribuição em condição (vs comparação) | [ ] | [ ] | [ ] | [ ] | |
-| Precedência de concatenação vs operação | [ ] | [ ] | [ ] | [ ] | |
-| Off-by-one ou iteração confusa | [ ] | [ ] | [ ] | [ ] | |
-| Dupla negação ou booleano denso | [ ] | [ ] | [ ] | [ ] | |
-
----
-
-## Passo 3.1: Avaliação Descritiva da Qualidade do Código
-
-Responda para cada fase (máx. 3-4 linhas por fase):
-
-**Fase 1 - Código-base Original:**
-- O que torna este código confuso? Qual é o impacto para manutenção?
-
-**Fase 3 - Código Gerado:**
-- O código gerado é funcionalmente equivalente ao original?
-- Quais padrões confusos o LLM replicou?
-- Quais padrões o LLM evitou ou modificou?
-
-**Fase 4 - Código Refatorado (SEM menção a "átomos"):**
-- Que tipos de melhoria a LLM propôs? (renomeação, extração de métodos, simplificação de lógica, etc.)
-- O código refatorado é mais claro? Em quais aspectos?
-- A LLM conseguiu reconhecer e eliminar confusão mesmo sem ser instruída explicitamente?
-
-**Conclusão sobre Qualidade:**
-- Qual LLM produziu as melhores refatorações?
-- Quais melhorias fizeram maior diferença na clareza?
-
----
-
-## Passo 3.2: LLMs Disponíveis
-
-### Chats web para usar na atividade
+## Chats web para usar na atividade
 
 - ChatGPT (OpenAI): https://chatgpt.com
 - Gemini (Google): https://gemini.google.com
@@ -195,13 +152,3 @@ Responda para cada fase (máx. 3-4 linhas por fase):
 - Hugging Face: https://huggingface.co/models
 - OpenRouter: https://openrouter.ai
 
----
-
-## Entrega Final
-
-1. Código-base original escolhido (AC01 a AC10).
-2. Tabela de auditoria preenchida com SIM/NÃO para cada átomo em cada fase.
-3. Avaliação descritiva de qualidade para Fases 1, 3 e 4.
-4. Código gerado na Fase 3 e código refatorado na Fase 4.
-5. Comparação entre LLMs testados: qual foi melhor em geração e refatoração?
-6. Conclusão: Qual é a capacidade real de LLMs em eliminar confusão cognitiva de código?
