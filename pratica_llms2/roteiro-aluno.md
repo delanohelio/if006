@@ -22,13 +22,15 @@ Baseado em: "Atoms of Confusion in Code" (https://arxiv.org/abs/2103.05424)
 
 ## Passo 1: Escolha do Código Base
 
-Escolha um dos 10 códigos com átomos de confusão em [codigos-atomos-confusao.md](codigos-atomos-confusao.md).
+Escolha dois dos 10 códigos com átomos de confusão em [codigos-atomos-confusao.md](codigos-atomos-confusao.md).
 
 Regras para esta etapa:
 
-1. Cada grupo escolhe apenas 1 código-base (AC01 a AC10).
+1. Cada grupo escolhe apenas 2 códigos-bases (AC01 a AC10).
 2. Use o mesmo código em todas as fases de review.
-3. Registre no relatório qual código-base foi escolhido.
+3. Para cada código, siga as 4 fases de análise e geração.
+4. Registre no relatório, para cada código-base, qual foi escolhido.
+5. Seu grupo vai enviar duas vezes o formulário de registro, uma para cada código-base escolhido.
 
 ---
 
