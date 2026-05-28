@@ -40,15 +40,24 @@ Formulário de Registro de Atividade: [Formulário de Registro de Atividade](htt
 
 1. Use o mesmo código-base em todas as fases.
 2. Execute cada fase em chat novo/separado.
-3. Faça pelo menos 1 iteração de melhoria (pedindo revisão da revisão).
-4. Registre prompt usado e saída obtida em um documento do grupo.
-5. Cronometrize quanto tempo cada análise levou.
+3. Nas Fases 1 e 2, sempre copie e cole o código-base junto com o prompt.
+4. Na Fase 3, não cole o código-base: use apenas o prompt sugerido do exercício.
+5. Na Fase 4, use o código gerado na Fase 3 como entrada da revisão/refatoração.
+6. Faça pelo menos 1 iteração de melhoria (pedindo revisão da revisão).
+7. Registre prompt usado e saída obtida em um documento do grupo.
+8. Cronometrize quanto tempo cada análise levou.
 
 ---
 
 ## Passo 2: As 4 Fases da Prática
 
 ### Fase 1: Análise Genérica do Código Base
+
+Como executar:
+
+1. Copie e cole o código-base completo no chat.
+2. Cole o prompt de análise na mesma mensagem (ou logo em seguida), junto com o código.
+3. Não envie apenas o prompt: o código-base deve estar sempre presente nesta fase.
 
 Prompt sugerido:
 
@@ -61,6 +70,12 @@ O que observar:
 - As explicações são técnicas ou superficiais?
 
 ### Fase 2: Análise com Contexto Semântico
+
+Como executar:
+
+1. Abra um novo chat para esta fase.
+2. Copie e cole novamente o código-base completo.
+3. Envie o prompt semântico junto com o código-base (não envie só o texto do prompt).
 
 Prompt sugerido:
 
@@ -81,9 +96,10 @@ Exemplo: Para AC01, o prompt é: "Escreva um método que conte quantos números 
 Instruções:
 
 1. Copie exatamente o prompt sugerido no arquivo de códigos.
-2. Peça para a LLM gerar o código com esse prompt.
-3. Registre a saída completa.
-4. Compare com o código-base original: são equivalentes?
+2. Não cole o código-base nesta fase; envie apenas o prompt sugerido.
+3. Peça para a LLM gerar o código com esse prompt.
+4. Registre a saída completa.
+5. Compare com o código-base original: são equivalentes?
 
 O que observar:
 
@@ -100,10 +116,11 @@ Prompt sugerido:
 
 Instruções:
 
-1. Forneça à LLM o código gerado na Fase 3.
+1. Forneça à LLM o código gerado na Fase 3 (copie e cole esse código no chat).
 2. Peça uma revisão focada em qualidade geral (sem mencionar "átomos de confusão").
-3. Deixe a LLM propor refatorações naturalmente.
-4. Registre a saída e o código refatorado.
+3. Não envie o código-base original nesta fase; use apenas o código gerado na Fase 3.
+4. Deixe a LLM propor refatorações naturalmente.
+5. Registre a saída e o código refatorado.
 
 O que observar:
 
