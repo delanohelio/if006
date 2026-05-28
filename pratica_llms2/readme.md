@@ -3,8 +3,7 @@
 Este material foi dividido em três arquivos:
 
 1. [roteiro-aluno.md](roteiro-aluno.md) - versão operacional para execução da atividade.
-2. [roteiro-professor.md](roteiro-professor.md) - versão de condução, avaliação e fechamento.
-3. [codigos-atomos-confusao.md](codigos-atomos-confusao.md) - 10 códigos com funcionalidades reais, nomes significativos + prompts sugeridos para geração.
+2. [codigos-atomos-confusao.md](codigos-atomos-confusao.md) - 10 códigos com funcionalidades reais, nomes significativos + prompts sugeridos para geração.
 
 ---
 
